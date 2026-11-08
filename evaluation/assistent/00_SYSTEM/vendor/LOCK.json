@@ -1,0 +1,305 @@
+{
+  "lock_version": 1,
+  "python": "CPython 3.12 (standard GIL build)",
+  "pins": {
+    "jsonschema": "4.26.0",
+    "attrs": "25.4.0",
+    "jsonschema-specifications": "2025.9.1",
+    "referencing": "0.37.0",
+    "rpds-py": "0.30.0",
+    "typing-extensions": "4.15.0",
+    "rfc3339-validator": "0.1.4",
+    "six": "1.17.0"
+  },
+  "entries": [
+    {
+      "name": "jsonschema",
+      "version": "4.26.0",
+      "target": "common",
+      "path": "wheels/jsonschema-4.26.0-py3-none-any.whl",
+      "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+      "url": "https://files.pythonhosted.org/packages/69/90/f63fb5873511e014207a475e2bb4e8b2e570d655b00ac19a9a0ca0a385ee/jsonschema-4.26.0-py3-none-any.whl",
+      "metadata_url": "https://pypi.org/pypi/jsonschema/4.26.0/json",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "attrs>=22.2.0",
+        "jsonschema-specifications>=2023.03.6",
+        "referencing>=0.28.4",
+        "rpds-py>=0.25.0",
+        "fqdn; extra == \"format\"",
+        "idna; extra == \"format\"",
+        "isoduration; extra == \"format\"",
+        "jsonpointer>1.13; extra == \"format\"",
+        "rfc3339-validator; extra == \"format\"",
+        "rfc3987; extra == \"format\"",
+        "uri-template; extra == \"format\"",
+        "webcolors>=1.11; extra == \"format\"",
+        "fqdn; extra == \"format-nongpl\"",
+        "idna; extra == \"format-nongpl\"",
+        "isoduration; extra == \"format-nongpl\"",
+        "jsonpointer>1.13; extra == \"format-nongpl\"",
+        "rfc3339-validator; extra == \"format-nongpl\"",
+        "rfc3986-validator>0.1.0; extra == \"format-nongpl\"",
+        "rfc3987-syntax>=1.1.0; extra == \"format-nongpl\"",
+        "uri-template; extra == \"format-nongpl\"",
+        "webcolors>=24.6.0; extra == \"format-nongpl\""
+      ],
+      "license": "MIT",
+      "license_members": [
+        "jsonschema-4.26.0.dist-info/licenses/COPYING"
+      ],
+      "extracted": []
+    },
+    {
+      "name": "attrs",
+      "version": "25.4.0",
+      "target": "common",
+      "path": "wheels/attrs-25.4.0-py3-none-any.whl",
+      "sha256": "adcf7e2a1fb3b36ac48d97835bb6d8ade15b8dcce26aba8bf1d14847b57a3373",
+      "url": "https://files.pythonhosted.org/packages/3a/2a/7cc015f5b9f5db42b7d48157e23356022889fc354a2813c15934b7cb5c0e/attrs-25.4.0-py3-none-any.whl",
+      "metadata_url": "https://pypi.org/pypi/attrs/25.4.0/json",
+      "requires_python": ">=3.9",
+      "requires_dist": null,
+      "license": "MIT",
+      "license_members": [
+        "attrs-25.4.0.dist-info/licenses/LICENSE"
+      ],
+      "extracted": []
+    },
+    {
+      "name": "jsonschema-specifications",
+      "version": "2025.9.1",
+      "target": "common",
+      "path": "wheels/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+      "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+      "url": "https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+      "metadata_url": "https://pypi.org/pypi/jsonschema-specifications/2025.9.1/json",
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "referencing>=0.31.0"
+      ],
+      "license": "MIT",
+      "license_members": [
+        "jsonschema_specifications-2025.9.1.dist-info/licenses/COPYING"
+      ],
+      "extracted": []
+    },
+    {
+      "name": "referencing",
+      "version": "0.37.0",
+      "target": "common",
+      "path": "wheels/referencing-0.37.0-py3-none-any.whl",
+      "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+      "url": "https://files.pythonhosted.org/packages/2c/58/ca301544e1fa93ed4f80d724bf5b194f6e4b945841c5bfd555878eea9fcb/referencing-0.37.0-py3-none-any.whl",
+      "metadata_url": "https://pypi.org/pypi/referencing/0.37.0/json",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "attrs>=22.2.0",
+        "rpds-py>=0.7.0",
+        "typing-extensions>=4.4.0; python_version < \"3.13\""
+      ],
+      "license": "MIT",
+      "license_members": [
+        "referencing-0.37.0.dist-info/licenses/COPYING"
+      ],
+      "extracted": []
+    },
+    {
+      "name": "rpds-py",
+      "version": "0.30.0",
+      "target": "macosx_10_12_x86_64",
+      "path": "wheels/rpds_py-0.30.0-cp312-cp312-macosx_10_12_x86_64.whl",
+      "sha256": "a161f20d9a43006833cd7068375a94d035714d73a172b681d8881820600abfad",
+      "url": "https://files.pythonhosted.org/packages/03/e7/98a2f4ac921d82f33e03f3835f5bf3a4a40aa1bfdc57975e74a97b2b4bdd/rpds_py-0.30.0-cp312-cp312-macosx_10_12_x86_64.whl",
+      "metadata_url": "https://pypi.org/pypi/rpds-py/0.30.0/json",
+      "requires_python": ">=3.10",
+      "requires_dist": null,
+      "license": "MIT",
+      "license_members": [
+        "rpds_py-0.30.0.dist-info/licenses/LICENSE"
+      ],
+      "extracted": [
+        {
+          "path": "native/macosx_10_12_x86_64/rpds_py-0.30.0.dist-info/METADATA",
+          "sha256": "cc01d097ddb9c7e07a29c9553ee8dd35cf920e85fb574f7b0c23d68138a716bf"
+        },
+        {
+          "path": "native/macosx_10_12_x86_64/rpds_py-0.30.0.dist-info/WHEEL",
+          "sha256": "31a204da0df75acd7c3c775386266a0521dd6d6498d420e1dbac43257129ea2a"
+        },
+        {
+          "path": "native/macosx_10_12_x86_64/rpds_py-0.30.0.dist-info/licenses/LICENSE",
+          "sha256": "314e4e91be3baa93c0fb4bccc9e4e97cd643eb839b065af921782c2175fe9909"
+        },
+        {
+          "path": "native/macosx_10_12_x86_64/rpds/__init__.py",
+          "sha256": "c373205d6ee5a530880b0d0a5dbc36d105f9ef7fe46ec12758878cb0202e82f3"
+        },
+        {
+          "path": "native/macosx_10_12_x86_64/rpds/__init__.pyi",
+          "sha256": "6a6ef1ea831afe9bbf92fd4d96896a25b3ebebf52f0afa32c462ab0c648c2849"
+        },
+        {
+          "path": "native/macosx_10_12_x86_64/rpds/py.typed",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "native/macosx_10_12_x86_64/rpds/rpds.cpython-312-darwin.so",
+          "sha256": "3c8f99e047ebd22a0413c8682dc8a4ef9198127963537588e47379569656a3bb"
+        },
+        {
+          "path": "native/macosx_10_12_x86_64/rpds_py-0.30.0.dist-info/RECORD",
+          "sha256": "b4bbde1b76d321e055f07b5bff4942f6b83801c9d75ef319d2a9671de3204f72"
+        }
+      ]
+    },
+    {
+      "name": "rpds-py",
+      "version": "0.30.0",
+      "target": "macosx_11_0_arm64",
+      "path": "wheels/rpds_py-0.30.0-cp312-cp312-macosx_11_0_arm64.whl",
+      "sha256": "6abc8880d9d036ecaafe709079969f56e876fcf107f7a8e9920ba6d5a3878d05",
+      "url": "https://files.pythonhosted.org/packages/4d/a1/bca7fd3d452b272e13335db8d6b0b3ecde0f90ad6f16f3328c6fb150c889/rpds_py-0.30.0-cp312-cp312-macosx_11_0_arm64.whl",
+      "metadata_url": "https://pypi.org/pypi/rpds-py/0.30.0/json",
+      "requires_python": ">=3.10",
+      "requires_dist": null,
+      "license": "MIT",
+      "license_members": [
+        "rpds_py-0.30.0.dist-info/licenses/LICENSE"
+      ],
+      "extracted": [
+        {
+          "path": "native/macosx_11_0_arm64/rpds_py-0.30.0.dist-info/METADATA",
+          "sha256": "cc01d097ddb9c7e07a29c9553ee8dd35cf920e85fb574f7b0c23d68138a716bf"
+        },
+        {
+          "path": "native/macosx_11_0_arm64/rpds_py-0.30.0.dist-info/WHEEL",
+          "sha256": "57ae8a42907e15dcad3d75862493c5d9ea844e00503630bc62e5a5ab269c2bfe"
+        },
+        {
+          "path": "native/macosx_11_0_arm64/rpds_py-0.30.0.dist-info/licenses/LICENSE",
+          "sha256": "314e4e91be3baa93c0fb4bccc9e4e97cd643eb839b065af921782c2175fe9909"
+        },
+        {
+          "path": "native/macosx_11_0_arm64/rpds/__init__.py",
+          "sha256": "c373205d6ee5a530880b0d0a5dbc36d105f9ef7fe46ec12758878cb0202e82f3"
+        },
+        {
+          "path": "native/macosx_11_0_arm64/rpds/__init__.pyi",
+          "sha256": "6a6ef1ea831afe9bbf92fd4d96896a25b3ebebf52f0afa32c462ab0c648c2849"
+        },
+        {
+          "path": "native/macosx_11_0_arm64/rpds/py.typed",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "native/macosx_11_0_arm64/rpds/rpds.cpython-312-darwin.so",
+          "sha256": "6e4d0fbe08ca46ea7e06c4f3dab80f19ff8f716c1c77a8846d97d6785aa36176"
+        },
+        {
+          "path": "native/macosx_11_0_arm64/rpds_py-0.30.0.dist-info/RECORD",
+          "sha256": "c165b610b182fe29391d91cea37cc6dc61df79d4c4b579e13e4c89e363f079b3"
+        }
+      ]
+    },
+    {
+      "name": "rpds-py",
+      "version": "0.30.0",
+      "target": "win_amd64",
+      "path": "wheels/rpds_py-0.30.0-cp312-cp312-win_amd64.whl",
+      "sha256": "a090322ca841abd453d43456ac34db46e8b05fd9b3b4ac0c78bcde8b089f959b",
+      "url": "https://files.pythonhosted.org/packages/39/3b/f786af9957306fdc38a74cef405b7b93180f481fb48453a114bb6465744a/rpds_py-0.30.0-cp312-cp312-win_amd64.whl",
+      "metadata_url": "https://pypi.org/pypi/rpds-py/0.30.0/json",
+      "requires_python": ">=3.10",
+      "requires_dist": null,
+      "license": "MIT",
+      "license_members": [
+        "rpds_py-0.30.0.dist-info/licenses/LICENSE"
+      ],
+      "extracted": [
+        {
+          "path": "native/win_amd64/rpds_py-0.30.0.dist-info/METADATA",
+          "sha256": "4feecc3485b91b6f8494965109cc65d8e15efd372a85ab76f44f320ca736b841"
+        },
+        {
+          "path": "native/win_amd64/rpds_py-0.30.0.dist-info/WHEEL",
+          "sha256": "3227061131d9d8d4af4cde25e0d000cc35db3879eb94e292d029c1b2715388bb"
+        },
+        {
+          "path": "native/win_amd64/rpds_py-0.30.0.dist-info/licenses/LICENSE",
+          "sha256": "8bcb72c82ea8ae74802293c41d93ad7d51434001b0ae45a603a5af0f507aee0a"
+        },
+        {
+          "path": "native/win_amd64/rpds/__init__.py",
+          "sha256": "c373205d6ee5a530880b0d0a5dbc36d105f9ef7fe46ec12758878cb0202e82f3"
+        },
+        {
+          "path": "native/win_amd64/rpds/__init__.pyi",
+          "sha256": "002d522690504f7af41f28a432ad2324c9bd3c9829e8d2fc8818d7888e256d84"
+        },
+        {
+          "path": "native/win_amd64/rpds/py.typed",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "native/win_amd64/rpds/rpds.cp312-win_amd64.pyd",
+          "sha256": "68ee8e02e31d0c1536b76410ed67b3016e4d089fe066c5df6f60b15412b4dd66"
+        },
+        {
+          "path": "native/win_amd64/rpds_py-0.30.0.dist-info/RECORD",
+          "sha256": "30517cd9135cf856a84bee8b84ec5f392f0d6ea8821f768c5e71daf7debbca92"
+        }
+      ]
+    },
+    {
+      "name": "typing-extensions",
+      "version": "4.15.0",
+      "target": "common",
+      "path": "wheels/typing_extensions-4.15.0-py3-none-any.whl",
+      "sha256": "f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548",
+      "url": "https://files.pythonhosted.org/packages/18/67/36e9267722cc04a6b9f15c7f3441c2363321a3ea07da7ae0c0707beb2a9c/typing_extensions-4.15.0-py3-none-any.whl",
+      "metadata_url": "https://pypi.org/pypi/typing-extensions/4.15.0/json",
+      "requires_python": ">=3.9",
+      "requires_dist": null,
+      "license": "PSF-2.0",
+      "license_members": [
+        "typing_extensions-4.15.0.dist-info/licenses/LICENSE"
+      ],
+      "extracted": []
+    },
+    {
+      "name": "rfc3339-validator",
+      "version": "0.1.4",
+      "target": "common",
+      "path": "wheels/rfc3339_validator-0.1.4-py2.py3-none-any.whl",
+      "sha256": "24f6ec1eda14ef823da9e36ec7113124b39c04d50a4d3d3a3c2859577e7791fa",
+      "url": "https://files.pythonhosted.org/packages/7b/44/4e421b96b67b2daff264473f7465db72fbdf36a07e05494f50300cc7b0c6/rfc3339_validator-0.1.4-py2.py3-none-any.whl",
+      "metadata_url": "https://pypi.org/pypi/rfc3339-validator/0.1.4/json",
+      "requires_python": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
+      "requires_dist": [
+        "six"
+      ],
+      "license": "MIT license",
+      "license_members": [
+        "rfc3339_validator-0.1.4.dist-info/LICENSE"
+      ],
+      "extracted": []
+    },
+    {
+      "name": "six",
+      "version": "1.17.0",
+      "target": "common",
+      "path": "wheels/six-1.17.0-py2.py3-none-any.whl",
+      "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+      "url": "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl",
+      "metadata_url": "https://pypi.org/pypi/six/1.17.0/json",
+      "requires_python": "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7",
+      "requires_dist": null,
+      "license": "MIT",
+      "license_members": [
+        "six-1.17.0.dist-info/LICENSE"
+      ],
+      "extracted": []
+    }
+  ]
+}

@@ -1,0 +1,465 @@
+{
+  "type": "object",
+  "properties": {
+    "assistant_id": {
+      "const": "m1_bpmn_ist_evaluation"
+    },
+    "schema_version": {
+      "const": "0.3.0"
+    },
+    "package_version": {
+      "const": "0.3.0-candidate"
+    },
+    "case_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "model_kind": {
+          "const": "IST"
+        },
+        "process_scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "model_kind",
+        "process_scope",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "models": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/model"
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/issue"
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/check"
+      }
+    },
+    "continuation": {
+      "type": "object",
+      "properties": {
+        "current_action": {
+          "type": "string",
+          "minLength": 1
+        },
+        "deferred": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "next_action": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "current_action",
+        "deferred",
+        "next_action"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "assistant_id",
+    "schema_version",
+    "package_version",
+    "case_ref",
+    "revision",
+    "context",
+    "sources",
+    "models",
+    "artifacts",
+    "issues",
+    "checks",
+    "continuation"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "properties": {
+        "artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "kind": {
+          "enum": [
+            "bpmn",
+            "png",
+            "svg",
+            "pdf",
+            "context"
+          ]
+        },
+        "origin": {
+          "enum": [
+            "student_upload",
+            "derived_preview"
+          ]
+        }
+      },
+      "required": [
+        "artifact_id",
+        "path",
+        "sha256",
+        "kind",
+        "origin"
+      ],
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "read_scope": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "source_id",
+        "artifact_id",
+        "title",
+        "read_scope"
+      ],
+      "additionalProperties": false
+    },
+    "model": {
+      "type": "object",
+      "properties": {
+        "model_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "model_revision": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "artifact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "bpmn_artifact_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "image_status": {
+          "enum": [
+            "not_available",
+            "pending",
+            "matched",
+            "mismatch"
+          ]
+        },
+        "image_evidence": {
+          "type": "string"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "model_id",
+        "model_revision",
+        "artifact_ids",
+        "bpmn_artifact_id",
+        "image_status",
+        "image_evidence",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "issue": {
+      "type": "object",
+      "properties": {
+        "issue_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "model_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "model_revision": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "element_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "uniqueItems": true
+        },
+        "location": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "enum": [
+            "error",
+            "question",
+            "presentation",
+            "not_assessable"
+          ]
+        },
+        "priority": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "certainty": {
+          "enum": [
+            "proven",
+            "reasoned",
+            "open"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "impact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "basis": {
+                "enum": [
+                  "model",
+                  "source"
+                ]
+              },
+              "ref_id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+              },
+              "locator": {
+                "type": "string",
+                "minLength": 1
+              },
+              "explanation": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "basis",
+              "ref_id",
+              "locator",
+              "explanation"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "ist_representation_hint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "open",
+            "acknowledged",
+            "resolved",
+            "deferred"
+          ]
+        },
+        "dimension": {
+          "enum": [
+            "syntax",
+            "semantics",
+            "pragmatics"
+          ]
+        },
+        "rule_kind": {
+          "enum": [
+            "bpmn_rule",
+            "understandability_criterion",
+            "modeling_recommendation",
+            "clarification"
+          ]
+        },
+        "rule_reference": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "issue_id",
+        "model_id",
+        "model_revision",
+        "element_ids",
+        "location",
+        "category",
+        "priority",
+        "certainty",
+        "description",
+        "impact",
+        "evidence",
+        "ist_representation_hint",
+        "status",
+        "dimension",
+        "rule_kind",
+        "rule_reference"
+      ],
+      "additionalProperties": false
+    },
+    "check": {
+      "type": "object",
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "model_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "model_revision": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "artifact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "kind": {
+          "enum": [
+            "syntax",
+            "semantics",
+            "pragmatics",
+            "visual",
+            "input_integrity"
+          ]
+        },
+        "status": {
+          "enum": [
+            "not_checked",
+            "partial",
+            "checked",
+            "not_assessable"
+          ],
+          "description": "Prüfabdeckung, kein Qualitätsurteil; Mängel stehen in issues."
+        },
+        "performed_by": {
+          "enum": [
+            "none",
+            "assistant",
+            "student"
+          ]
+        },
+        "evidence": {
+          "type": "string"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "check_id",
+        "model_id",
+        "model_revision",
+        "artifact_ids",
+        "kind",
+        "status",
+        "performed_by",
+        "evidence",
+        "limitations"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

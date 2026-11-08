@@ -1,0 +1,433 @@
+{
+  "package_version": "0.3.0-candidate",
+  "status": "CANDIDATE",
+  "assistant_id": "m1_bpmn_ist_evaluation",
+  "files": [
+    {
+      "path": "START_PROMPT.md",
+      "bytes": 3044,
+      "sha256": "5784158b95c27306a954cfaf2ad3d85fa780f3188725fb74ff05b16f27e40f91",
+      "source": "paketvorlage/START_PROMPT.md"
+    },
+    {
+      "path": "KURZANLEITUNG.md",
+      "bytes": 1976,
+      "sha256": "e83dfd1da04b4959f18a07624b72073d6d6e2f307f664a8abe1d4f2d15a65477",
+      "source": "paketvorlage/KURZANLEITUNG.md"
+    },
+    {
+      "path": "HILFE.md",
+      "bytes": 1351,
+      "sha256": "6e3d976f4d0e1440bc592cdf7664867188115a0f2bef246835993b47aeb20777",
+      "source": "paketvorlage/HILFE.md"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 948,
+      "sha256": "2c55da31203f526a3492a3322a0b76b3cc1ede1af24bd5892cce1273d4ad7532",
+      "source": "paketvorlage/CHANGELOG.md"
+    },
+    {
+      "path": "00_SYSTEM/ARBEITSWEISE.md",
+      "bytes": 3805,
+      "sha256": "bfa91f0f47bef2b911a9cb1d0cf93ca3d81f71bbc2763aa10479be78ef0fab6f",
+      "source": "paketvorlage/00_SYSTEM/ARBEITSWEISE.md"
+    },
+    {
+      "path": "00_SYSTEM/QUELLENWEGWEISER.md",
+      "bytes": 959,
+      "sha256": "e124a7df6cabdc1326659a358f65a6b4b80ba2585756d5b124742cd06af70706",
+      "source": "paketvorlage/00_SYSTEM/QUELLENWEGWEISER.md"
+    },
+    {
+      "path": "00_SYSTEM/IMPORTPROFILE.md",
+      "bytes": 2059,
+      "sha256": "fd62e978625b6971f2857d7e94cd405ffe51bdd74f9f59f1f51e65dc1f41f95a",
+      "source": "paketvorlage/00_SYSTEM/IMPORTPROFILE.md"
+    },
+    {
+      "path": "00_SYSTEM/MODELLORIENTIERUNG.md",
+      "bytes": 422,
+      "sha256": "8e41ccff95922b5b0656b31387350a3766a17913630810456f8b980cd5dd7438",
+      "source": "paketvorlage/00_SYSTEM/MODELLORIENTIERUNG.md"
+    },
+    {
+      "path": "00_SYSTEM/templates/ANTWORT_UND_UEBERGABE.md",
+      "bytes": 2554,
+      "sha256": "1a535cc062d03b691bf0672128f3e9bf3bd7fe435f27e7603e37062fe3c9eba2",
+      "source": "paketvorlage/00_SYSTEM/templates/ANTWORT_UND_UEBERGABE.md"
+    },
+    {
+      "path": "02_EIGENE_UNTERLAGEN/README.md",
+      "bytes": 183,
+      "sha256": "ad7a00775f925a408d7f010ff9bae6edbfb0b253a6d3bbd2325c26dce1f11113",
+      "source": "paketvorlage/02_EIGENE_UNTERLAGEN/README.md"
+    },
+    {
+      "path": "03_ARBEITSSTAND/README.md",
+      "bytes": 234,
+      "sha256": "57ad77e96506743d468e280b7fc84e6bb92f4516f8fad2e59df78ecbb2478b04",
+      "source": "paketvorlage/03_ARBEITSSTAND/README.md"
+    },
+    {
+      "path": "04_UEBERGABE/README.md",
+      "bytes": 152,
+      "sha256": "a822ade136d3ffc6229c62d9473c59e362645f42cb4334f9f09d2c99b19d4061",
+      "source": "paketvorlage/04_UEBERGABE/README.md"
+    },
+    {
+      "path": "05_NACHWEISE/README.md",
+      "bytes": 214,
+      "sha256": "2e6f739e5535d567356ae6d05ceacb797f6ca2d8577e00a49eec8d947ce5be29",
+      "source": "paketvorlage/05_NACHWEISE/README.md"
+    },
+    {
+      "path": "00_SYSTEM/DIALOG_UND_SPEICHERN.md",
+      "bytes": 3476,
+      "sha256": "c14fe95b94a04219dcbae89323bd00163d230bdc869620c502250b2f495ef9d5",
+      "source": "integration/00_SYSTEM/DIALOG_UND_SPEICHERN.md"
+    },
+    {
+      "path": "00_SYSTEM/schemas/output_schema.json",
+      "bytes": 10582,
+      "sha256": "93c856b17c42cc64ea4440909cf266686bfbbacb4798f04c95a46d46ea645612",
+      "source": "integration/00_SYSTEM/schemas/output_schema.json"
+    },
+    {
+      "path": "00_SYSTEM/tools/save_state.py",
+      "bytes": 20636,
+      "sha256": "f2300a9c2486d7d4b5be369182b96457661be5d0cd489218de3bff151dd7ffa0",
+      "source": "integration/00_SYSTEM/tools/save_state.py"
+    },
+    {
+      "path": "00_SYSTEM/tools/neutral_io.py",
+      "bytes": 12461,
+      "sha256": "8b3b5e8c7a2a732c4c437099817e4bbb255c9ac4a997e022de2554a226b87133",
+      "source": "integration/00_SYSTEM/tools/neutral_io.py"
+    },
+    {
+      "path": "00_SYSTEM/tools/requirements.txt",
+      "bytes": 19,
+      "sha256": "756cc9e506ae4ee1a6f6c0507088b5cfc0dc8ba350fb2d2d46f1ffa72033adb6",
+      "source": "integration/00_SYSTEM/tools/requirements.txt"
+    },
+    {
+      "path": "00_SYSTEM/tools/INTEGRATION.md",
+      "bytes": 10438,
+      "sha256": "9d7124023f62111405d427e59127c0647f15392283cb644e6ff6a432ccbeddd6",
+      "source": "integration/00_SYSTEM/tools/INTEGRATION.md"
+    },
+    {
+      "path": "00_SYSTEM/tools/bpmn_contract.py",
+      "bytes": 6156,
+      "sha256": "c823820ea7642f205d18a1bbe7b1bf6623cbcdaba2c4bf4ff37101212d94cc82",
+      "source": "integration/00_SYSTEM/tools/bpmn_contract.py"
+    },
+    {
+      "path": "00_SYSTEM/tools/inspect_models.py",
+      "bytes": 2883,
+      "sha256": "e42f54507feaf2c134122d87f25fec2568a1cc815e6d4a321c94b0d278694e9b",
+      "source": "integration/00_SYSTEM/tools/inspect_models.py"
+    },
+    {
+      "path": "00_SYSTEM/tools/run_local.py",
+      "bytes": 1480,
+      "sha256": "44b198c80cc51879f1f40bba9eb3fe103eb3641e245b6aba2fe03665316b8002",
+      "source": "integration/00_SYSTEM/tools/run_local.py"
+    },
+    {
+      "path": "00_SYSTEM/tools/local_runtime.py",
+      "bytes": 3413,
+      "sha256": "cb0d951fecfc5ad7336ecaf0378ec413671cf2602c7faf735847eb3b61ad5350",
+      "source": "integration/00_SYSTEM/tools/local_runtime.py"
+    },
+    {
+      "path": "00_SYSTEM/tools/check_course.py",
+      "bytes": 1800,
+      "sha256": "4c70d4f51ce84cda23f239b583b4a21aa0df4fa5efe99d42383f6817673335c0",
+      "source": "integration/00_SYSTEM/tools/check_course.py"
+    },
+    {
+      "path": "00_SYSTEM/tools/check_links.py",
+      "bytes": 4187,
+      "sha256": "9ee67039608ca5c8ea68eebf1f82cc8807bb4ff8f0c15a60008a371d38d45d88",
+      "source": "integration/00_SYSTEM/tools/check_links.py"
+    },
+    {
+      "path": "00_SYSTEM/tools/render_bpmn.cjs",
+      "bytes": 5662,
+      "sha256": "001189801819ca7e2080c502a673a15115311da7fbe4c417610517879544a3ed",
+      "source": "integration/00_SYSTEM/tools/render_bpmn.cjs"
+    },
+    {
+      "path": "00_SYSTEM/tools/VORSCHAU_UND_KURSPRUEFUNG.md",
+      "bytes": 2651,
+      "sha256": "e070ba5fa4e70a82ca832ec91963b1be64fee0730d8ae46f5f838f1d70be1925",
+      "source": "integration/00_SYSTEM/tools/VORSCHAU_UND_KURSPRUEFUNG.md"
+    },
+    {
+      "path": "00_SYSTEM/tools/renderer/bpmn-viewer.js",
+      "bytes": 550127,
+      "sha256": "85e609da8624de352b8ca7ac56b48bf2cd189a6ddbaffb0930854305a8320438",
+      "source": "integration/00_SYSTEM/tools/renderer/bpmn-viewer.js"
+    },
+    {
+      "path": "00_SYSTEM/tools/renderer/LICENSE",
+      "bytes": 1390,
+      "sha256": "5788cf8bd61481776cee1c943595525499a1355c045e9244f92e6c8092c06770",
+      "source": "integration/00_SYSTEM/tools/renderer/LICENSE"
+    },
+    {
+      "path": "00_SYSTEM/tools/renderer/LOCK.json",
+      "bytes": 377,
+      "sha256": "f3819257b84d04ba90d533fe0906042bfdd424525f254959143d59a7dfe4b59f",
+      "source": "integration/00_SYSTEM/tools/renderer/LOCK.json"
+    },
+    {
+      "path": "00_SYSTEM/tools/LOKALER_START.md",
+      "bytes": 5359,
+      "sha256": "d9c77c91a766e27c8f0d4f1e60f33bfa4fc1652d8446bc00b8e3309cb35f5dec",
+      "source": "integration/00_SYSTEM/tools/LOKALER_START.md"
+    },
+    {
+      "path": "01_VERBINDLICHE_QUELLEN/KURSKERN.md",
+      "bytes": 4456,
+      "sha256": "7718ec006b0e9110a7e38a47bc75eaf4c3ee52022fe5f974fe2c6b53047c51f6",
+      "source": "paketfassung/KURSKERN.md"
+    },
+    {
+      "path": "01_VERBINDLICHE_QUELLEN/UMFANGSPROFIL.md",
+      "bytes": 1405,
+      "sha256": "49cee03ec00abe7ed480cd7d7ccfad194da8c1260115cf641d59693a7d4e2e1e",
+      "source": "paketfassung/UMFANGSPROFIL.md"
+    },
+    {
+      "path": "01_VERBINDLICHE_QUELLEN/EVALUATIONSRUBRIK.md",
+      "bytes": 3089,
+      "sha256": "b856797a5cb490cfde93c85d2c3c4c006e7675330de097074f37b1974542f96c",
+      "source": "paketfassung/EVALUATIONSRUBRIK.md"
+    },
+    {
+      "path": "00_SYSTEM/vendor/LOCK.json",
+      "bytes": 12715,
+      "sha256": "78d2939f8d468c2c583ddd5966c555c09cf399c03e827194210f94ebe3107113",
+      "source": "integration/00_SYSTEM/vendor/LOCK.json"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds/__init__.py",
+      "bytes": 99,
+      "sha256": "c373205d6ee5a530880b0d0a5dbc36d105f9ef7fe46ec12758878cb0202e82f3",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds/__init__.py"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds/__init__.pyi",
+      "bytes": 2602,
+      "sha256": "6a6ef1ea831afe9bbf92fd4d96896a25b3ebebf52f0afa32c462ab0c648c2849",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds/__init__.pyi"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds/py.typed",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds/py.typed"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds/rpds.cpython-312-darwin.so",
+      "bytes": 966456,
+      "sha256": "3c8f99e047ebd22a0413c8682dc8a4ef9198127963537588e47379569656a3bb",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds/rpds.cpython-312-darwin.so"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds_py-0.30.0.dist-info/METADATA",
+      "bytes": 4145,
+      "sha256": "cc01d097ddb9c7e07a29c9553ee8dd35cf920e85fb574f7b0c23d68138a716bf",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds_py-0.30.0.dist-info/METADATA"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds_py-0.30.0.dist-info/RECORD",
+      "bytes": 610,
+      "sha256": "b4bbde1b76d321e055f07b5bff4942f6b83801c9d75ef319d2a9671de3204f72",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds_py-0.30.0.dist-info/RECORD"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds_py-0.30.0.dist-info/WHEEL",
+      "bytes": 107,
+      "sha256": "31a204da0df75acd7c3c775386266a0521dd6d6498d420e1dbac43257129ea2a",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds_py-0.30.0.dist-info/WHEEL"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds_py-0.30.0.dist-info/licenses/LICENSE",
+      "bytes": 1057,
+      "sha256": "314e4e91be3baa93c0fb4bccc9e4e97cd643eb839b065af921782c2175fe9909",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_10_12_x86_64/rpds_py-0.30.0.dist-info/licenses/LICENSE"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds/__init__.py",
+      "bytes": 99,
+      "sha256": "c373205d6ee5a530880b0d0a5dbc36d105f9ef7fe46ec12758878cb0202e82f3",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds/__init__.py"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds/__init__.pyi",
+      "bytes": 2602,
+      "sha256": "6a6ef1ea831afe9bbf92fd4d96896a25b3ebebf52f0afa32c462ab0c648c2849",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds/__init__.pyi"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds/py.typed",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds/py.typed"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds/rpds.cpython-312-darwin.so",
+      "bytes": 967424,
+      "sha256": "6e4d0fbe08ca46ea7e06c4f3dab80f19ff8f716c1c77a8846d97d6785aa36176",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds/rpds.cpython-312-darwin.so"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds_py-0.30.0.dist-info/METADATA",
+      "bytes": 4145,
+      "sha256": "cc01d097ddb9c7e07a29c9553ee8dd35cf920e85fb574f7b0c23d68138a716bf",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds_py-0.30.0.dist-info/METADATA"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds_py-0.30.0.dist-info/RECORD",
+      "bytes": 610,
+      "sha256": "c165b610b182fe29391d91cea37cc6dc61df79d4c4b579e13e4c89e363f079b3",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds_py-0.30.0.dist-info/RECORD"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds_py-0.30.0.dist-info/WHEEL",
+      "bytes": 105,
+      "sha256": "57ae8a42907e15dcad3d75862493c5d9ea844e00503630bc62e5a5ab269c2bfe",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds_py-0.30.0.dist-info/WHEEL"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds_py-0.30.0.dist-info/licenses/LICENSE",
+      "bytes": 1057,
+      "sha256": "314e4e91be3baa93c0fb4bccc9e4e97cd643eb839b065af921782c2175fe9909",
+      "source": "integration/00_SYSTEM/vendor/native/macosx_11_0_arm64/rpds_py-0.30.0.dist-info/licenses/LICENSE"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/win_amd64/rpds/__init__.py",
+      "bytes": 99,
+      "sha256": "c373205d6ee5a530880b0d0a5dbc36d105f9ef7fe46ec12758878cb0202e82f3",
+      "source": "integration/00_SYSTEM/vendor/native/win_amd64/rpds/__init__.py"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/win_amd64/rpds/__init__.pyi",
+      "bytes": 2681,
+      "sha256": "002d522690504f7af41f28a432ad2324c9bd3c9829e8d2fc8818d7888e256d84",
+      "source": "integration/00_SYSTEM/vendor/native/win_amd64/rpds/__init__.pyi"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/win_amd64/rpds/py.typed",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "integration/00_SYSTEM/vendor/native/win_amd64/rpds/py.typed"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/win_amd64/rpds/rpds.cp312-win_amd64.pyd",
+      "bytes": 628224,
+      "sha256": "68ee8e02e31d0c1536b76410ed67b3016e4d089fe066c5df6f60b15412b4dd66",
+      "source": "integration/00_SYSTEM/vendor/native/win_amd64/rpds/rpds.cp312-win_amd64.pyd"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/win_amd64/rpds_py-0.30.0.dist-info/METADATA",
+      "bytes": 4213,
+      "sha256": "4feecc3485b91b6f8494965109cc65d8e15efd372a85ab76f44f320ca736b841",
+      "source": "integration/00_SYSTEM/vendor/native/win_amd64/rpds_py-0.30.0.dist-info/METADATA"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/win_amd64/rpds_py-0.30.0.dist-info/RECORD",
+      "bytes": 607,
+      "sha256": "30517cd9135cf856a84bee8b84ec5f392f0d6ea8821f768c5e71daf7debbca92",
+      "source": "integration/00_SYSTEM/vendor/native/win_amd64/rpds_py-0.30.0.dist-info/RECORD"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/win_amd64/rpds_py-0.30.0.dist-info/WHEEL",
+      "bytes": 97,
+      "sha256": "3227061131d9d8d4af4cde25e0d000cc35db3879eb94e292d029c1b2715388bb",
+      "source": "integration/00_SYSTEM/vendor/native/win_amd64/rpds_py-0.30.0.dist-info/WHEEL"
+    },
+    {
+      "path": "00_SYSTEM/vendor/native/win_amd64/rpds_py-0.30.0.dist-info/licenses/LICENSE",
+      "bytes": 1076,
+      "sha256": "8bcb72c82ea8ae74802293c41d93ad7d51434001b0ae45a603a5af0f507aee0a",
+      "source": "integration/00_SYSTEM/vendor/native/win_amd64/rpds_py-0.30.0.dist-info/licenses/LICENSE"
+    },
+    {
+      "path": "00_SYSTEM/vendor/wheels/attrs-25.4.0-py3-none-any.whl",
+      "bytes": 67615,
+      "sha256": "adcf7e2a1fb3b36ac48d97835bb6d8ade15b8dcce26aba8bf1d14847b57a3373",
+      "source": "integration/00_SYSTEM/vendor/wheels/attrs-25.4.0-py3-none-any.whl"
+    },
+    {
+      "path": "00_SYSTEM/vendor/wheels/jsonschema-4.26.0-py3-none-any.whl",
+      "bytes": 90630,
+      "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+      "source": "integration/00_SYSTEM/vendor/wheels/jsonschema-4.26.0-py3-none-any.whl"
+    },
+    {
+      "path": "00_SYSTEM/vendor/wheels/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+      "bytes": 18437,
+      "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+      "source": "integration/00_SYSTEM/vendor/wheels/jsonschema_specifications-2025.9.1-py3-none-any.whl"
+    },
+    {
+      "path": "00_SYSTEM/vendor/wheels/referencing-0.37.0-py3-none-any.whl",
+      "bytes": 26766,
+      "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+      "source": "integration/00_SYSTEM/vendor/wheels/referencing-0.37.0-py3-none-any.whl"
+    },
+    {
+      "path": "00_SYSTEM/vendor/wheels/rfc3339_validator-0.1.4-py2.py3-none-any.whl",
+      "bytes": 3490,
+      "sha256": "24f6ec1eda14ef823da9e36ec7113124b39c04d50a4d3d3a3c2859577e7791fa",
+      "source": "integration/00_SYSTEM/vendor/wheels/rfc3339_validator-0.1.4-py2.py3-none-any.whl"
+    },
+    {
+      "path": "00_SYSTEM/vendor/wheels/rpds_py-0.30.0-cp312-cp312-macosx_10_12_x86_64.whl",
+      "bytes": 375086,
+      "sha256": "a161f20d9a43006833cd7068375a94d035714d73a172b681d8881820600abfad",
+      "source": "integration/00_SYSTEM/vendor/wheels/rpds_py-0.30.0-cp312-cp312-macosx_10_12_x86_64.whl"
+    },
+    {
+      "path": "00_SYSTEM/vendor/wheels/rpds_py-0.30.0-cp312-cp312-macosx_11_0_arm64.whl",
+      "bytes": 359053,
+      "sha256": "6abc8880d9d036ecaafe709079969f56e876fcf107f7a8e9920ba6d5a3878d05",
+      "source": "integration/00_SYSTEM/vendor/wheels/rpds_py-0.30.0-cp312-cp312-macosx_11_0_arm64.whl"
+    },
+    {
+      "path": "00_SYSTEM/vendor/wheels/rpds_py-0.30.0-cp312-cp312-win_amd64.whl",
+      "bytes": 240463,
+      "sha256": "a090322ca841abd453d43456ac34db46e8b05fd9b3b4ac0c78bcde8b089f959b",
+      "source": "integration/00_SYSTEM/vendor/wheels/rpds_py-0.30.0-cp312-cp312-win_amd64.whl"
+    },
+    {
+      "path": "00_SYSTEM/vendor/wheels/six-1.17.0-py2.py3-none-any.whl",
+      "bytes": 11050,
+      "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+      "source": "integration/00_SYSTEM/vendor/wheels/six-1.17.0-py2.py3-none-any.whl"
+    },
+    {
+      "path": "00_SYSTEM/vendor/wheels/typing_extensions-4.15.0-py3-none-any.whl",
+      "bytes": 44614,
+      "sha256": "f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548",
+      "source": "integration/00_SYSTEM/vendor/wheels/typing_extensions-4.15.0-py3-none-any.whl"
+    },
+    {
+      "path": "00_SYSTEM/FOUNDATION_LOCK.json",
+      "bytes": 1217,
+      "sha256": "7875f585d036c2af94fabb82f7257edbbf53b67890e7c50627f76eb93fafda21",
+      "source": "Historical provenance of the unchanged neutral storage core only"
+    },
+    {
+      "path": "PRUEFNACHWEIS.md",
+      "bytes": 1730,
+      "sha256": "a9a92fd2c7fa15fe5e9dd9daffa35e1f027b82aa08cfe2c616939f7383c63445",
+      "source": "PRUEFNACHWEIS.md"
+    }
+  ]
+}

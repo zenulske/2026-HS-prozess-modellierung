@@ -1,0 +1,27 @@
+{
+  "commit": "465d68e7c586ede750c240ac7b2040d920f748cd",
+  "files": [
+    {
+      "file": "00_SYSTEM/tools/save_state.py",
+      "source": "core/assistants/foundation/bpmn-storage_v0.1.0/save_state.py",
+      "sha256": "f2300a9c2486d7d4b5be369182b96457661be5d0cd489218de3bff151dd7ffa0"
+    },
+    {
+      "file": "00_SYSTEM/tools/neutral_io.py",
+      "source": "core/assistants/foundation/bpmn-storage_v0.1.0/neutral_io.py",
+      "sha256": "8b3b5e8c7a2a732c4c437099817e4bbb255c9ac4a997e022de2554a226b87133"
+    },
+    {
+      "file": "00_SYSTEM/tools/requirements.txt",
+      "source": "core/assistants/foundation/bpmn-storage_v0.1.0/requirements.txt",
+      "sha256": "756cc9e506ae4ee1a6f6c0507088b5cfc0dc8ba350fb2d2d46f1ffa72033adb6"
+    },
+    {
+      "file": "00_SYSTEM/tools/INTEGRATION.md",
+      "source": "core/assistants/foundation/bpmn-storage_v0.1.0/INTEGRATION.md",
+      "sha256": "9d7124023f62111405d427e59127c0647f15392283cb644e6ff6a432ccbeddd6",
+      "upstream_sha256": "c338dd5ce8f9f5c8bbd557f698b4f020e42e339cc9a2dae0630fb17cd3369e42",
+      "adaptation": "Documentation only: isolated package entry and domain scope 0.3.0; neutral storage code unchanged"
+    }
+  ]
+}

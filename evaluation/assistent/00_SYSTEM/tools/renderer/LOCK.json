@@ -1,0 +1,7 @@
+{
+  "version": "18.3.1",
+  "sha256": "85e609da8624de352b8ca7ac56b48bf2cd189a6ddbaffb0930854305a8320438",
+  "source": "https://unpkg.com/bpmn-js@18.3.1/dist/bpmn-viewer.development.js",
+  "license": "https://raw.githubusercontent.com/bpmn-io/bpmn-js/v18.3.1/LICENSE",
+  "origin": "Unchanged local preflight viewer; upstream byte comparison recorded in candidate test."
+}
