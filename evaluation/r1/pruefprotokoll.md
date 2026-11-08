@@ -4,9 +4,9 @@
 |---|---|
 | Geprüfte Modellfassung | v1 – K4-A-3.0, Abgabestand 03.11.2026 |
 | Bereitgestellte Dateien | .bpmn (71 Elemente, 5 Ansichten), PNG-Gesamtansicht, Prozessdokumentation (S. 3, S. 5), feedback-praesentation1.md |
-| Sprachmodell-Umgebung | <!-- z. B. claude.ai --> |
-| Modellbezeichnung | <!-- soweit angezeigt --> |
-| Prüfdatum | |
+| Sprachmodell-Umgebung | claude.ai|
+| Modellbezeichnung | Opus 5.5 |
+| Prüfdatum | 08.11.26 |
 | Bericht | `evaluationsbericht_r1.md` (für Abgabe umbenennen: `KK6-4_VeloWerkZuerich_ReparaturService_Assistentenbericht_r1.pdf`) |
 | Vom Assistenten gemeldete nicht lesbare Dateien | keine gemeldet |
 | Gesamturteil | Kein BPMN-Regelverstoss; 1 belegter Mangel (Lesbarkeit), 2 offene Fragen, mehrere Darstellungshinweise |

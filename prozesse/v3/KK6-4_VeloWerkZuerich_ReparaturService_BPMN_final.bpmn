@@ -1,0 +1,575 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Defs_KK64_v3" targetNamespace="https://example.org/velowerk/KK6-4/K4/v3" exporter="KK6-4 BPMN XML authoring" exporterVersion="final">
+  <bpmn:message id="Msg_M01" name="Werkstattanfrage"/>
+  <bpmn:message id="Msg_M02" name="Vorschlag"/>
+  <bpmn:message id="Msg_M03" name="Kundenentscheid"/>
+  <bpmn:message id="Msg_M04" name="Teilebedarf"/>
+  <bpmn:message id="Msg_M05" name="Bereitstellungs­status"/>
+  <bpmn:message id="Msg_M06" name="Lieferoption"/>
+  <bpmn:message id="Msg_M07" name="Lieferentscheid"/>
+  <bpmn:message id="Msg_M08" name="Bereitstellungs­bestätigung"/>
+  <bpmn:message id="Msg_M09" name="Zusatzvorschlag"/>
+  <bpmn:message id="Msg_M10" name="Zusatzentscheid"/>
+  <bpmn:message id="Msg_M11" name="Abholinformation"/>
+  <bpmn:message id="Msg_M12" name="Leistungsdaten"/>
+  <bpmn:message id="Msg_M13" name="Abbruch­information"/>
+  <bpmn:message id="Msg_M14" name="Erbrachte Leistungen"/>
+  <bpmn:message id="Msg_M15" name="Abbruch / Restteile"/>
+  <bpmn:process id="Process_K4" name="K4 Reparatur- und Serviceaufträge abwickeln" isExecutable="false">
+    <bpmn:documentation>Fiktives fachliches Ist-Modell, Fassung final (v2 nach Assistentenprüfung r2, nur Darstellungskorrekturen) (Überarbeitung von K4-A-3.0 auf Basis von Präsentations- und Assistentenfeedback r1). Ergebnisinformationen sind fachliche Annahmen, keine ausführbaren Variablenzuweisungen.</bpmn:documentation>
+    <bpmn:startEvent id="E01" name="E01 Werkstattanfrage eingegangen">
+      <bpmn:outgoing>F001</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="ED_E01" messageRef="Msg_M01"/>
+    </bpmn:startEvent>
+    <bpmn:subProcess id="SP1" name="SP1 K4.1 Auftrag und Leistungsumfang klären">
+      <bpmn:documentation>Start mit Werkstattauftrag. Ergebnis AuftragFreigegeben: Ja nur nach G02 Freigegeben. A33 hält bei technischer Unmöglichkeit, Ablehnung oder Fristablauf AuftragFreigegeben=Nein und den Grund fest.</bpmn:documentation>
+      <bpmn:incoming>F001</bpmn:incoming>
+      <bpmn:outgoing>F002</bpmn:outgoing>
+      <bpmn:laneSet id="LS_SP1">
+        <bpmn:lane id="L_SP1_SA" name="Serviceannahme">
+          <bpmn:flowNodeRef>E16</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A01</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A02</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A05</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A06</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A07</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>G02</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>E03</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A33</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>E18</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G19</bpmn:flowNodeRef></bpmn:lane>
+        <bpmn:lane id="L_SP1_WT" name="Werkstatt">
+          <bpmn:flowNodeRef>A03</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>G01</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A04</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A08</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>E17</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="E16" name="E16 Auftrag beginnen">
+        <bpmn:outgoing>F010</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:task id="A01" name="A01 Anliegen und Kontaktdaten erfassen">
+        <bpmn:incoming>F010</bpmn:incoming>
+        <bpmn:outgoing>F011</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="A02" name="A02 E-Bike und Übergabezustand erfassen">
+        <bpmn:incoming>F011</bpmn:incoming>
+        <bpmn:outgoing>F012</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="A05" name="A05 Kosten und Terminrahmen schätzen">
+        <bpmn:incoming>F015</bpmn:incoming>
+        <bpmn:outgoing>F017</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sendTask id="A06" name="A06 Vorschlag zur Freigabe senden" messageRef="Msg_M02">
+        <bpmn:incoming>F017</bpmn:incoming>
+        <bpmn:outgoing>F018</bpmn:outgoing>
+      </bpmn:sendTask>
+      <bpmn:receiveTask id="A07" name="A07 Kundenentscheid empfangen" messageRef="Msg_M03">
+        <bpmn:incoming>F018</bpmn:incoming>
+        <bpmn:outgoing>F019</bpmn:outgoing>
+      </bpmn:receiveTask>
+      <bpmn:exclusiveGateway id="G02" name="G02 Kunden­entscheid?" gatewayDirection="Diverging">
+        <bpmn:incoming>F019</bpmn:incoming>
+        <bpmn:outgoing>F020</bpmn:outgoing>
+        <bpmn:outgoing>F021</bpmn:outgoing>
+        <bpmn:outgoing>F023</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:boundaryEvent id="E03" name="E03 5 Arbeitstage ohne Antwort" attachedToRef="A07" cancelActivity="true">
+        <bpmn:documentation>Antwortfrist: 5 Arbeitstage ab Versand des Vorschlags an die Kundschaft (Annahme AN3).</bpmn:documentation><bpmn:outgoing>F024</bpmn:outgoing>
+        <bpmn:timerEventDefinition id="ED_E03">
+          <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">5 Arbeitstage</bpmn:timeDuration></bpmn:timerEventDefinition>
+      </bpmn:boundaryEvent>
+      <bpmn:exclusiveGateway id="G19" name="G19 Abbruch zusammenführen" gatewayDirection="Converging"><bpmn:incoming>F016</bpmn:incoming><bpmn:incoming>F023</bpmn:incoming><bpmn:incoming>F024</bpmn:incoming><bpmn:outgoing>F076</bpmn:outgoing></bpmn:exclusiveGateway><bpmn:task id="A33" name="A33 Abschlussart und Grund festhalten">
+        <bpmn:documentation>Fortsetzbarkeit Nein und konkreten Grund festhalten; SP2 wird übersprungen.</bpmn:documentation>
+        <bpmn:incoming>F076</bpmn:incoming><bpmn:outgoing>F025</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:endEvent id="E18" name="E18 Nicht fortsetzbar">
+        <bpmn:incoming>F025</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:task id="A03" name="A03 E-Bike diagnostizieren">
+        <bpmn:incoming>F012</bpmn:incoming>
+        <bpmn:incoming>F022</bpmn:incoming>
+        <bpmn:outgoing>F013</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:exclusiveGateway id="G01" name="G01 Auftrag technisch machbar?" gatewayDirection="Diverging">
+        <bpmn:incoming>F013</bpmn:incoming>
+        <bpmn:outgoing>F014</bpmn:outgoing>
+        <bpmn:outgoing>F016</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:task id="A04" name="A04 Leistungsumfang und Teilebedarf festlegen">
+        <bpmn:incoming>F014</bpmn:incoming>
+        <bpmn:outgoing>F015</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="A08" name="A08 Änderungswunsch fachlich prüfen">
+        <bpmn:incoming>F021</bpmn:incoming>
+        <bpmn:outgoing>F022</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:endEvent id="E17" name="E17 Freigabe liegt vor">
+        <bpmn:incoming>F020</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="F010" sourceRef="E16" targetRef="A01" name=""/>
+      <bpmn:sequenceFlow id="F011" sourceRef="A01" targetRef="A02" name=""/>
+      <bpmn:sequenceFlow id="F012" sourceRef="A02" targetRef="A03" name=""/>
+      <bpmn:sequenceFlow id="F013" sourceRef="A03" targetRef="G01" name=""/>
+      <bpmn:sequenceFlow id="F014" sourceRef="G01" targetRef="A04" name="Ja">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ja</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F015" sourceRef="A04" targetRef="A05" name=""/>
+      <bpmn:sequenceFlow id="F016" sourceRef="G01" targetRef="G19" name="Nein">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Nein</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F017" sourceRef="A05" targetRef="A06" name=""/>
+      <bpmn:sequenceFlow id="F018" sourceRef="A06" targetRef="A07" name=""/>
+      <bpmn:sequenceFlow id="F019" sourceRef="A07" targetRef="G02" name=""/>
+      <bpmn:sequenceFlow id="F020" sourceRef="G02" targetRef="E17" name="Freigegeben">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Freigegeben</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F021" sourceRef="G02" targetRef="A08" name="Ändern">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ändern</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F022" sourceRef="A08" targetRef="A03" name=""/>
+      <bpmn:sequenceFlow id="F023" sourceRef="G02" targetRef="G19" name="Abgelehnt">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Abgelehnt</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F024" sourceRef="E03" targetRef="G19" name=""/>
+      <bpmn:sequenceFlow id="F025" sourceRef="A33" targetRef="E18" name=""/>
+    <bpmn:sequenceFlow id="F076" sourceRef="G19" targetRef="A33" name=""/></bpmn:subProcess>
+    <bpmn:subProcess id="SP2" name="SP2 K4.2 Wartung / Reparatur planen und durchführen">
+      <bpmn:documentation>Start nur bei Freigabe. Ergebnis ArbeitenPruefbereit: Ja nach Ausführung ohne offenen ergebnisrelevanten Zusatzbefund. A34 hält andernfalls ArbeitenPruefbereit=Nein und den Grund fest. E15/E14 bleiben innerhalb SP2.</bpmn:documentation>
+      <bpmn:incoming>F003</bpmn:incoming>
+      <bpmn:outgoing>F005</bpmn:outgoing>
+      <bpmn:laneSet id="LS_SP2">
+        <bpmn:lane id="L_SP2_SA" name="Serviceannahme">
+          <bpmn:flowNodeRef>A11</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A12</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>E05</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>G05</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A17</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A18</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>E08</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>G09</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A34</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>E21</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G20</bpmn:flowNodeRef><bpmn:flowNodeRef>G21</bpmn:flowNodeRef></bpmn:lane>
+        <bpmn:lane id="L_SP2_WT" name="Werkstatt">
+          <bpmn:flowNodeRef>E19</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>G03</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A09</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A10</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>G04</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>E06</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>G06</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A13</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>E14</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>G07</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A14</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A15</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>G08</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A16</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>E20</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A19</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>E15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="E19" name="E19 Freigegebenen Auftrag übernehmen">
+        <bpmn:outgoing>F026</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:exclusiveGateway id="G03" name="G03 Ersatzteile erforderlich?" gatewayDirection="Mixed">
+        <bpmn:incoming>F026</bpmn:incoming>
+        <bpmn:incoming>F054</bpmn:incoming>
+        <bpmn:outgoing>F027</bpmn:outgoing>
+        <bpmn:outgoing>F031</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sendTask id="A09" name="A09 Teilebereitstellung bei K2 anfordern" messageRef="Msg_M04">
+        <bpmn:incoming>F027</bpmn:incoming>
+        <bpmn:outgoing>F028</bpmn:outgoing>
+      </bpmn:sendTask>
+      <bpmn:receiveTask id="A10" name="A10 Statusmeldung von K2 empfangen" messageRef="Msg_M05">
+        <bpmn:incoming>F028</bpmn:incoming>
+        <bpmn:outgoing>F029</bpmn:outgoing>
+      </bpmn:receiveTask>
+      <bpmn:exclusiveGateway id="G04" name="G04 Teile bereit?" gatewayDirection="Diverging">
+        <bpmn:incoming>F029</bpmn:incoming>
+        <bpmn:outgoing>F030</bpmn:outgoing>
+        <bpmn:outgoing>F032</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:intermediateCatchEvent id="E06" name="E06 Teile von K2 bereitgestellt">
+        <bpmn:incoming>F035</bpmn:incoming>
+        <bpmn:outgoing>F036</bpmn:outgoing>
+        <bpmn:messageEventDefinition id="ED_E06" messageRef="Msg_M08"/>
+      </bpmn:intermediateCatchEvent>
+      <bpmn:exclusiveGateway id="G06" name="G06 Teile­bereitstellung zusammen­führen" gatewayDirection="Converging">
+        <bpmn:incoming>F030</bpmn:incoming>
+        <bpmn:incoming>F036</bpmn:incoming>
+        <bpmn:outgoing>F037</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:task id="A13" name="A13 Teile und Auftrag abgleichen">
+        <bpmn:incoming>F037</bpmn:incoming>
+        <bpmn:outgoing>F038</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:intermediateCatchEvent id="E14" name="E14 Neu planen">
+        <bpmn:outgoing>F054</bpmn:outgoing>
+        <bpmn:linkEventDefinition id="LED_E14" name="Neu planen">
+          <bpmn:source>LED_E15</bpmn:source>
+        </bpmn:linkEventDefinition>
+      </bpmn:intermediateCatchEvent>
+      <bpmn:exclusiveGateway id="G07" name="G07 Arbeitsplanung zusammenführen" gatewayDirection="Converging">
+        <bpmn:incoming>F031</bpmn:incoming>
+        <bpmn:incoming>F038</bpmn:incoming>
+        <bpmn:outgoing>F044</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:task id="A14" name="A14 Werkstatttermin und Arbeit planen">
+        <bpmn:incoming>F044</bpmn:incoming>
+        <bpmn:outgoing>F045</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="A15" name="A15 Freigegebenen Arbeitsumfang bearbeiten">
+        <bpmn:documentation>Nur aktuell freigegebenen offenen Umfang bearbeiten. Bei einem ergebnisrelevanten Befund die Arbeit am betroffenen Umfang anhalten; keine noch nicht freigegebene Zusatzarbeit durchführen.</bpmn:documentation>
+        <bpmn:incoming>F045</bpmn:incoming>
+        <bpmn:outgoing>F046</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:exclusiveGateway id="G08" name="G08 Ergebnis­relevanter Zusatz­befund ausserhalb Freigabe?" gatewayDirection="Diverging">
+        <bpmn:documentation>Ja nur bei einem Befund ausserhalb der Freigabe, der das vereinbarte Ergebnis verhindert. Optionale Empfehlungen ohne Einfluss auf dieses Ergebnis folgen dem Nein-Weg und ändern den Auftrag nicht.</bpmn:documentation>
+        <bpmn:incoming>F046</bpmn:incoming>
+        <bpmn:outgoing>F047</bpmn:outgoing>
+        <bpmn:outgoing>F048</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:task id="A16" name="A16 Zusatzbefund und Mehrbedarf dokumentieren">
+        <bpmn:incoming>F048</bpmn:incoming>
+        <bpmn:outgoing>F049</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:endEvent id="E20" name="E20 Arbeiten zur Prüfung bereit">
+        <bpmn:incoming>F047</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sendTask id="A11" name="A11 Lieferoption zur Freigabe senden" messageRef="Msg_M06">
+        <bpmn:incoming>F032</bpmn:incoming>
+        <bpmn:outgoing>F033</bpmn:outgoing>
+      </bpmn:sendTask>
+      <bpmn:receiveTask id="A12" name="A12 Lieferentscheid empfangen" messageRef="Msg_M07">
+        <bpmn:incoming>F033</bpmn:incoming>
+        <bpmn:outgoing>F034</bpmn:outgoing>
+      </bpmn:receiveTask>
+      <bpmn:boundaryEvent id="E05" name="E05 3 Arbeitstage ohne Antwort" attachedToRef="A12" cancelActivity="true">
+        <bpmn:documentation>Antwortfrist: 3 Arbeitstage ab Versand des Vorschlags an die Kundschaft (Annahme AN3).</bpmn:documentation><bpmn:outgoing>F040</bpmn:outgoing>
+        <bpmn:timerEventDefinition id="ED_E05">
+          <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">3 Arbeitstage</bpmn:timeDuration></bpmn:timerEventDefinition>
+      </bpmn:boundaryEvent>
+      <bpmn:exclusiveGateway id="G05" name="G05 Lieferoption akzeptiert?" gatewayDirection="Diverging">
+        <bpmn:incoming>F034</bpmn:incoming>
+        <bpmn:outgoing>F035</bpmn:outgoing>
+        <bpmn:outgoing>F039</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sendTask id="A17" name="A17 Ergänzung zur Freigabe senden" messageRef="Msg_M09">
+        <bpmn:incoming>F049</bpmn:incoming>
+        <bpmn:outgoing>F050</bpmn:outgoing>
+      </bpmn:sendTask>
+      <bpmn:receiveTask id="A18" name="A18 Zusatzentscheid empfangen" messageRef="Msg_M10">
+        <bpmn:incoming>F050</bpmn:incoming>
+        <bpmn:outgoing>F051</bpmn:outgoing>
+      </bpmn:receiveTask>
+      <bpmn:boundaryEvent id="E08" name="E08 2 Arbeitstage ohne Antwort" attachedToRef="A18" cancelActivity="true">
+        <bpmn:documentation>Antwortfrist: 2 Arbeitstage ab Versand des Vorschlags an die Kundschaft (Annahme AN3).</bpmn:documentation><bpmn:outgoing>F042</bpmn:outgoing>
+        <bpmn:timerEventDefinition id="ED_E08">
+          <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">2 Arbeitstage</bpmn:timeDuration></bpmn:timerEventDefinition>
+      </bpmn:boundaryEvent>
+      <bpmn:exclusiveGateway id="G20" name="G20 Zusatzabbruch zusammenführen" gatewayDirection="Converging"><bpmn:incoming>F041</bpmn:incoming><bpmn:incoming>F042</bpmn:incoming><bpmn:outgoing>F077</bpmn:outgoing></bpmn:exclusiveGateway><bpmn:exclusiveGateway id="G21" name="G21 Abbruch zusammenführen" gatewayDirection="Converging"><bpmn:incoming>F077</bpmn:incoming><bpmn:incoming>F039</bpmn:incoming><bpmn:incoming>F040</bpmn:incoming><bpmn:outgoing>F078</bpmn:outgoing></bpmn:exclusiveGateway><bpmn:exclusiveGateway id="G09" name="G09 Zusatzumfang freigegeben?" gatewayDirection="Diverging">
+        <bpmn:incoming>F051</bpmn:incoming>
+        <bpmn:outgoing>F041</bpmn:outgoing>
+        <bpmn:outgoing>F052</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:task id="A19" name="A19 Auftrag und Freigabe aktualisieren">
+        <bpmn:incoming>F052</bpmn:incoming>
+        <bpmn:outgoing>F053</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:intermediateThrowEvent id="E15" name="E15 Neu planen">
+        <bpmn:incoming>F053</bpmn:incoming>
+        <bpmn:linkEventDefinition id="LED_E15" name="Neu planen">
+          <bpmn:target>LED_E14</bpmn:target>
+        </bpmn:linkEventDefinition>
+      </bpmn:intermediateThrowEvent>
+      <bpmn:task id="A34" name="A34 Abschlussart und Grund festhalten">
+        <bpmn:documentation>ArbeitenPruefbereit Nein und konkreten Grund festhalten; G14 wählt die Zustandsdokumentation.</bpmn:documentation>
+        <bpmn:incoming>F078</bpmn:incoming><bpmn:outgoing>F043</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:endEvent id="E21" name="E21 Nicht fortsetzbar">
+        <bpmn:incoming>F043</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="F026" sourceRef="E19" targetRef="G03" name=""/>
+      <bpmn:sequenceFlow id="F027" sourceRef="G03" targetRef="A09" name="Ja">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ja</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F028" sourceRef="A09" targetRef="A10" name=""/>
+      <bpmn:sequenceFlow id="F029" sourceRef="A10" targetRef="G04" name=""/>
+      <bpmn:sequenceFlow id="F030" sourceRef="G04" targetRef="G06" name="Ja">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ja</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F031" sourceRef="G03" targetRef="G07" name="Nein">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Nein</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F032" sourceRef="G04" targetRef="A11" name="Nein">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Nein</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F033" sourceRef="A11" targetRef="A12" name=""/>
+      <bpmn:sequenceFlow id="F034" sourceRef="A12" targetRef="G05" name=""/>
+      <bpmn:sequenceFlow id="F035" sourceRef="G05" targetRef="E06" name="Ja">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ja</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F036" sourceRef="E06" targetRef="G06" name=""/>
+      <bpmn:sequenceFlow id="F037" sourceRef="G06" targetRef="A13" name=""/>
+      <bpmn:sequenceFlow id="F038" sourceRef="A13" targetRef="G07" name=""/>
+      <bpmn:sequenceFlow id="F039" sourceRef="G05" targetRef="G21" name="Nein">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Nein</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F040" sourceRef="E05" targetRef="G21" name=""/>
+      <bpmn:sequenceFlow id="F041" sourceRef="G09" targetRef="G20" name="Nein">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Nein</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F042" sourceRef="E08" targetRef="G20" name=""/>
+      <bpmn:sequenceFlow id="F043" sourceRef="A34" targetRef="E21" name=""/>
+      <bpmn:sequenceFlow id="F044" sourceRef="G07" targetRef="A14" name=""/>
+      <bpmn:sequenceFlow id="F045" sourceRef="A14" targetRef="A15" name=""/>
+      <bpmn:sequenceFlow id="F046" sourceRef="A15" targetRef="G08" name=""/>
+      <bpmn:sequenceFlow id="F047" sourceRef="G08" targetRef="E20" name="Nein">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Nein</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F048" sourceRef="G08" targetRef="A16" name="Ja">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ja</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F049" sourceRef="A16" targetRef="A17" name=""/>
+      <bpmn:sequenceFlow id="F050" sourceRef="A17" targetRef="A18" name=""/>
+      <bpmn:sequenceFlow id="F051" sourceRef="A18" targetRef="G09" name=""/>
+      <bpmn:sequenceFlow id="F052" sourceRef="G09" targetRef="A19" name="Ja">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ja</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F053" sourceRef="A19" targetRef="E15" name=""/>
+      <bpmn:sequenceFlow id="F054" sourceRef="E14" targetRef="G03" name=""/>
+      <bpmn:textAnnotation id="T04" textFormat="text/plain">
+        <bpmn:text>Optionale Empfehlungen ohne Einfluss auf das vereinbarte Ergebnis lösen keinen Zusatzvorschlag aus (G08: Nein).</bpmn:text>
+      </bpmn:textAnnotation>
+    <bpmn:sequenceFlow id="F077" sourceRef="G20" targetRef="G21" name=""/><bpmn:sequenceFlow id="F078" sourceRef="G21" targetRef="A34" name=""/></bpmn:subProcess>
+    <bpmn:subProcess id="SP3" name="SP3 K4.3 Ergebnis prüfen und E-Bike zurückgeben">
+      <bpmn:documentation>Start mit Auftragstatus. G14 wählt nur nach E20 die Prüfung, andernfalls die Rückgabe mit Ist-Zustand. A27 schliesst vollständig erfüllt, A32 unvollständig. Abbruch und Restteile werden nur an K2 gemeldet, wenn Teile bei K2 angefordert wurden (G17). Die beiden internen Enden beenden nur SP3; der Gesamtprozess endet mit E11 oder E13.</bpmn:documentation>
+      <bpmn:incoming>F006</bpmn:incoming>
+      <bpmn:outgoing>F007</bpmn:outgoing>
+      <bpmn:laneSet id="LS_SP3">
+        <bpmn:lane id="L_SP3_SA" name="Serviceannahme">
+          <bpmn:flowNodeRef>A24</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A25</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A26</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A27</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>E23</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A29</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A30</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A31</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A32</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>E24</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G17</bpmn:flowNodeRef><bpmn:flowNodeRef>A35</bpmn:flowNodeRef><bpmn:flowNodeRef>G18</bpmn:flowNodeRef></bpmn:lane>
+        <bpmn:lane id="L_SP3_WT" name="Werkstatt">
+          <bpmn:flowNodeRef>E22</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>G14</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>G10</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A20</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>G11</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A23</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>G12</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A21</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A22</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>A28</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="E22" name="E22 Auftragsstatus liegt vor">
+        <bpmn:outgoing>F055</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:exclusiveGateway id="G14" name="G14 Arbeiten zur Prüfung bereit?" gatewayDirection="Diverging">
+        <bpmn:incoming>F055</bpmn:incoming>
+        <bpmn:outgoing>F056</bpmn:outgoing>
+        <bpmn:outgoing>F057</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="G10" name="G10 Prüfung zusammenführen" gatewayDirection="Converging">
+        <bpmn:incoming>F056</bpmn:incoming>
+        <bpmn:incoming>F063</bpmn:incoming>
+        <bpmn:outgoing>F058</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:task id="A20" name="A20 Arbeitsumfang und Sicherheitsmerkmale prüfen">
+        <bpmn:incoming>F058</bpmn:incoming>
+        <bpmn:outgoing>F059</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:exclusiveGateway id="G11" name="G11 Prüfung bestanden?" gatewayDirection="Diverging">
+        <bpmn:incoming>F059</bpmn:incoming>
+        <bpmn:outgoing>F060</bpmn:outgoing>
+        <bpmn:outgoing>F061</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:task id="A23" name="A23 Prüfergebnis dokumentieren">
+        <bpmn:incoming>F060</bpmn:incoming>
+        <bpmn:outgoing>F066</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:exclusiveGateway id="G12" name="G12 Nacharbeit im freigegebenen Umfang möglich?" gatewayDirection="Diverging">
+        <bpmn:incoming>F061</bpmn:incoming>
+        <bpmn:outgoing>F062</bpmn:outgoing>
+        <bpmn:outgoing>F064</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:task id="A21" name="A21 Mängel nacharbeiten">
+        <bpmn:incoming>F062</bpmn:incoming>
+        <bpmn:outgoing>F063</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="A22" name="A22 Grenzen der Reparatur dokumentieren">
+        <bpmn:incoming>F064</bpmn:incoming>
+        <bpmn:outgoing>F065</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="A28" name="A28 Ist-Zustand und Nutzungshinweise festhalten">
+        <bpmn:incoming>F057</bpmn:incoming>
+        <bpmn:incoming>F065</bpmn:incoming>
+        <bpmn:outgoing>F071</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sendTask id="A24" name="A24 Abholbereitschaft mitteilen" messageRef="Msg_M11">
+        <bpmn:incoming>F066</bpmn:incoming>
+        <bpmn:outgoing>F067</bpmn:outgoing>
+      </bpmn:sendTask>
+      <bpmn:task id="A25" name="A25 Leistung und E-Bike übergeben">
+        <bpmn:incoming>F067</bpmn:incoming>
+        <bpmn:outgoing>F068</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sendTask id="A26" name="A26 Leistungsdaten an S4 übermitteln" messageRef="Msg_M12">
+        <bpmn:incoming>F068</bpmn:incoming>
+        <bpmn:outgoing>F069</bpmn:outgoing>
+      </bpmn:sendTask>
+      <bpmn:task id="A27" name="A27 Auftrag abschliessen">
+        <bpmn:documentation>Auftrag nach bestandener Prüfung und Übergabe vollständig erfüllt schliessen; Grundlage für G15 Ja.</bpmn:documentation>
+        <bpmn:incoming>F069</bpmn:incoming>
+        <bpmn:outgoing>F070</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:endEvent id="E23" name="E23 Vollständig erfüllt">
+        <bpmn:incoming>F070</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sendTask id="A29" name="A29 Abbruch und Rückgabe mitteilen" messageRef="Msg_M13">
+        <bpmn:incoming>F071</bpmn:incoming>
+        <bpmn:outgoing>F072</bpmn:outgoing>
+      </bpmn:sendTask>
+      <bpmn:task id="A30" name="A30 E-Bike mit Status zurückgeben">
+        <bpmn:incoming>F072</bpmn:incoming>
+        <bpmn:outgoing>F073</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sendTask id="A31" name="A31 Erbrachte Leistungen an S4 übermitteln" messageRef="Msg_M14">
+        <bpmn:incoming>F073</bpmn:incoming>
+        <bpmn:outgoing>F074</bpmn:outgoing>
+      </bpmn:sendTask>
+      <bpmn:exclusiveGateway id="G17" name="G17 Teile bei K2 angefordert?" gatewayDirection="Diverging"><bpmn:incoming>F074</bpmn:incoming><bpmn:outgoing>F079</bpmn:outgoing><bpmn:outgoing>F080</bpmn:outgoing></bpmn:exclusiveGateway><bpmn:sendTask id="A35" name="A35 Abbruch und Restteile an K2 melden" messageRef="Msg_M15"><bpmn:incoming>F079</bpmn:incoming><bpmn:outgoing>F082</bpmn:outgoing></bpmn:sendTask><bpmn:exclusiveGateway id="G18" name="G18 Meldung zusammenführen" gatewayDirection="Converging"><bpmn:incoming>F080</bpmn:incoming><bpmn:incoming>F082</bpmn:incoming><bpmn:outgoing>F081</bpmn:outgoing></bpmn:exclusiveGateway><bpmn:task id="A32" name="A32 Auftrag mit Abbruchgrund schliessen">
+        <bpmn:documentation>Auftrag nach Rückgabe mit Grund unvollständig schliessen; Grundlage für G15 Nein.</bpmn:documentation>
+        <bpmn:incoming>F081</bpmn:incoming>
+        <bpmn:outgoing>F075</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:endEvent id="E24" name="E24 Unvollständig abgeschlossen">
+        <bpmn:incoming>F075</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="F055" sourceRef="E22" targetRef="G14" name=""/>
+      <bpmn:sequenceFlow id="F056" sourceRef="G14" targetRef="G10" name="Ja">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ja</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F057" sourceRef="G14" targetRef="A28" name="Nein">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Nein</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F058" sourceRef="G10" targetRef="A20" name=""/>
+      <bpmn:sequenceFlow id="F059" sourceRef="A20" targetRef="G11" name=""/>
+      <bpmn:sequenceFlow id="F060" sourceRef="G11" targetRef="A23" name="Ja">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ja</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F061" sourceRef="G11" targetRef="G12" name="Nein">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Nein</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F062" sourceRef="G12" targetRef="A21" name="Ja">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ja</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F063" sourceRef="A21" targetRef="G10" name=""/>
+      <bpmn:sequenceFlow id="F064" sourceRef="G12" targetRef="A22" name="Nein">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Nein</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="F065" sourceRef="A22" targetRef="A28" name=""/>
+      <bpmn:sequenceFlow id="F066" sourceRef="A23" targetRef="A24" name=""/>
+      <bpmn:sequenceFlow id="F067" sourceRef="A24" targetRef="A25" name=""/>
+      <bpmn:sequenceFlow id="F068" sourceRef="A25" targetRef="A26" name=""/>
+      <bpmn:sequenceFlow id="F069" sourceRef="A26" targetRef="A27" name=""/>
+      <bpmn:sequenceFlow id="F070" sourceRef="A27" targetRef="E23" name=""/>
+      <bpmn:sequenceFlow id="F071" sourceRef="A28" targetRef="A29" name=""/>
+      <bpmn:sequenceFlow id="F072" sourceRef="A29" targetRef="A30" name=""/>
+      <bpmn:sequenceFlow id="F073" sourceRef="A30" targetRef="A31" name=""/>
+      <bpmn:sequenceFlow id="F074" sourceRef="A31" targetRef="G17" name=""/>
+      <bpmn:sequenceFlow id="F075" sourceRef="A32" targetRef="E24" name=""/>
+    <bpmn:sequenceFlow id="F079" sourceRef="G17" targetRef="A35" name="Ja"><bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ja</bpmn:conditionExpression></bpmn:sequenceFlow><bpmn:sequenceFlow id="F080" sourceRef="G17" targetRef="G18" name="Nein"><bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Nein</bpmn:conditionExpression></bpmn:sequenceFlow><bpmn:sequenceFlow id="F082" sourceRef="A35" targetRef="G18" name=""/><bpmn:sequenceFlow id="F081" sourceRef="G18" targetRef="A32" name=""/></bpmn:subProcess>
+    <bpmn:exclusiveGateway id="G13" name="G13 Auftrag freigegeben?" gatewayDirection="Diverging">
+      <bpmn:incoming>F002</bpmn:incoming>
+      <bpmn:outgoing>F003</bpmn:outgoing>
+      <bpmn:outgoing>F004</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="G16" name="G16 Rückgabe zusammenführen" gatewayDirection="Converging">
+      <bpmn:incoming>F004</bpmn:incoming>
+      <bpmn:incoming>F005</bpmn:incoming>
+      <bpmn:outgoing>F006</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="G15" name="G15 Leistung vollständig?" gatewayDirection="Diverging">
+      <bpmn:incoming>F007</bpmn:incoming>
+      <bpmn:outgoing>F008</bpmn:outgoing>
+      <bpmn:outgoing>F009</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="E11" name="E11 Geprüft zurückgegeben">
+      <bpmn:incoming>F008</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="E13" name="E13 Ohne vollständige Leistung abgeschlossen">
+      <bpmn:incoming>F009</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="F001" sourceRef="E01" targetRef="SP1" name=""/>
+    <bpmn:sequenceFlow id="F002" sourceRef="SP1" targetRef="G13" name=""/>
+    <bpmn:sequenceFlow id="F003" sourceRef="G13" targetRef="SP2" name="Ja">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ja</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F004" sourceRef="G13" targetRef="G16" name="Nein">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Nein</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F005" sourceRef="SP2" targetRef="G16" name=""/>
+    <bpmn:sequenceFlow id="F006" sourceRef="G16" targetRef="SP3" name=""/>
+    <bpmn:sequenceFlow id="F007" sourceRef="SP3" targetRef="G15" name=""/>
+    <bpmn:sequenceFlow id="F008" sourceRef="G15" targetRef="E11" name="Ja">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ja</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F009" sourceRef="G15" targetRef="E13" name="Nein">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Nein</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:textAnnotation id="T01" textFormat="text/plain">
+      <bpmn:text>Ergebnis K4.1: Die Freigabe der Kundschaft liegt vor,
+oder der Auftrag ist nicht fortsetzbar (Grund festgehalten).</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="T02" textFormat="text/plain">
+      <bpmn:text>Ergebnis K4.2: Die Arbeiten sind zur Prüfung bereit,
+oder der Auftrag ist nicht fortsetzbar.
+Wird K4.2 übersprungen, gilt: nicht prüfbereit.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="T03" textFormat="text/plain">
+      <bpmn:text>Ergebnis K4.3: Auftrag vollständig erfüllt
+oder unvollständig abgeschlossen.
+Danach unterscheidet G15 die beiden Prozessenden.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="AS_T01" sourceRef="SP1" targetRef="T01" associationDirection="None"/>
+    <bpmn:association id="AS_T02" sourceRef="SP2" targetRef="T02" associationDirection="None"/>
+    <bpmn:association id="AS_T03" sourceRef="SP3" targetRef="T03" associationDirection="None"/>
+  </bpmn:process>
+  <bpmn:collaboration id="Collaboration_K4">
+    <bpmn:participant id="P_K4" name="VeloWerk Zürich AG / K4" processRef="Process_K4"/>
+    <bpmn:participant id="P_Kunde" name="Kundschaft"/>
+    <bpmn:participant id="P_K2" name="K2 Warenversorgung und Warenverfügbarkeit sicherstellen"/>
+    <bpmn:participant id="P_S4" name="S4 Buchhaltung und Zahlungsverkehr abwickeln"/>
+    <bpmn:messageFlow id="M01" name="Werkstattanfrage" sourceRef="P_Kunde" targetRef="E01"><bpmn:documentation>Nachrichteninhalt: Werkstattanfrage (Nachrichtendefinition Msg_M01). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+    <bpmn:messageFlow id="M02" name="Vorschlag" sourceRef="A06" targetRef="P_Kunde"><bpmn:documentation>Nachrichteninhalt: Vorschlag (Nachrichtendefinition Msg_M02). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+    <bpmn:messageFlow id="M03" name="Kundenentscheid" sourceRef="P_Kunde" targetRef="A07"><bpmn:documentation>Nachrichteninhalt: Kundenentscheid (Nachrichtendefinition Msg_M03). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+    <bpmn:messageFlow id="M04" name="Teilebedarf" sourceRef="A09" targetRef="P_K2"><bpmn:documentation>Nachrichteninhalt: Teilebedarf (Nachrichtendefinition Msg_M04). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+    <bpmn:messageFlow id="M05" name="Bereitstellungs­status" sourceRef="P_K2" targetRef="A10"><bpmn:documentation>Nachrichteninhalt: Bereitstellungsstatus (Nachrichtendefinition Msg_M05). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+    <bpmn:messageFlow id="M06" name="Lieferoption" sourceRef="A11" targetRef="P_Kunde"><bpmn:documentation>Nachrichteninhalt: Lieferoption (Nachrichtendefinition Msg_M06). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+    <bpmn:messageFlow id="M07" name="Lieferentscheid" sourceRef="P_Kunde" targetRef="A12"><bpmn:documentation>Nachrichteninhalt: Lieferentscheid (Nachrichtendefinition Msg_M07). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+    <bpmn:messageFlow id="M08" name="Bereitstellungs­bestätigung" sourceRef="P_K2" targetRef="E06"><bpmn:documentation>Nachrichteninhalt: Bereitstellungsbestätigung (Nachrichtendefinition Msg_M08). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+    <bpmn:messageFlow id="M09" name="Zusatzvorschlag" sourceRef="A17" targetRef="P_Kunde"><bpmn:documentation>Nachrichteninhalt: Zusatzvorschlag (Nachrichtendefinition Msg_M09). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+    <bpmn:messageFlow id="M10" name="Zusatzentscheid" sourceRef="P_Kunde" targetRef="A18"><bpmn:documentation>Nachrichteninhalt: Zusatzentscheid (Nachrichtendefinition Msg_M10). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+    <bpmn:messageFlow id="M11" name="Abholinformation" sourceRef="A24" targetRef="P_Kunde"><bpmn:documentation>Nachrichteninhalt: Abholinformation (Nachrichtendefinition Msg_M11). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+    <bpmn:messageFlow id="M12" name="Leistungsdaten" sourceRef="A26" targetRef="P_S4"><bpmn:documentation>Nachrichteninhalt: Leistungsdaten (Nachrichtendefinition Msg_M12). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+    <bpmn:messageFlow id="M13" name="Abbruch­information" sourceRef="A29" targetRef="P_Kunde"><bpmn:documentation>Nachrichteninhalt: Abbruchinformation (Nachrichtendefinition Msg_M13). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+    <bpmn:messageFlow id="M14" name="Erbrachte Leistungen" sourceRef="A31" targetRef="P_S4"><bpmn:documentation>Nachrichteninhalt: Erbrachte Leistungen (Nachrichtendefinition Msg_M14). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+    <bpmn:messageFlow id="M15" name="Abbruch / Restteile" sourceRef="A35" targetRef="P_K2"><bpmn:documentation>Nachrichteninhalt: Abbruch / Restteile (Nachrichtendefinition Msg_M15). Die Verbindung wird ohne optionales Briefumschlag-Dekor dargestellt.</bpmn:documentation></bpmn:messageFlow>
+  </bpmn:collaboration>
+  <bpmndi:BPMNDiagram id="Diagram_GESAMT" name="Gesamtmodell K4 – Fassung v2"><bpmndi:BPMNPlane id="Plane_GESAMT" bpmnElement="Collaboration_K4"><bpmndi:BPMNShape xmlns:ns0="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_P_K4" bpmnElement="P_K4" isHorizontal="true" ns0:fill="#FFFFFF" ns0:stroke="#64748B"><dc:Bounds x="126.50" y="149.50" width="1552.50" height="3903.00"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns1="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_P_Kunde" bpmnElement="P_Kunde" isHorizontal="false" ns1:fill="#F1F5F9" ns1:stroke="#64748B"><dc:Bounds x="17.25" y="149.50" width="80.50" height="3903.00"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns2="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_P_K2" bpmnElement="P_K2" isHorizontal="false" ns2:fill="#F1F5F9" ns2:stroke="#64748B"><dc:Bounds x="1759.50" y="1564.00" width="103.50" height="943.00"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns3="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_P_S4" bpmnElement="P_S4" isHorizontal="false" ns3:fill="#F1F5F9" ns3:stroke="#64748B"><dc:Bounds x="1759.50" y="2806.00" width="103.50" height="793.50"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns4="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_L_SP1_SA" bpmnElement="L_SP1_SA" isHorizontal="true" ns4:fill="#FFFFFF" ns4:stroke="#718397"><dc:Bounds x="201.25" y="425.50" width="1213.25" height="264.50"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns5="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_L_SP1_WT" bpmnElement="L_SP1_WT" isHorizontal="true" ns5:fill="#F7FAFC" ns5:stroke="#718397"><dc:Bounds x="201.25" y="690.00" width="1213.25" height="379.50"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns6="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_L_SP2_SA" bpmnElement="L_SP2_SA" isHorizontal="true" ns6:fill="#FFFFFF" ns6:stroke="#718397"><dc:Bounds x="201.25" y="1610.00" width="1213.25" height="247.25"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns7="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_L_SP2_WT" bpmnElement="L_SP2_WT" isHorizontal="true" ns7:fill="#F7FAFC" ns7:stroke="#718397"><dc:Bounds x="201.25" y="1857.25" width="1213.25" height="592.25"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns8="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_L_SP3_WT" bpmnElement="L_SP3_WT" isHorizontal="true" ns8:fill="#F7FAFC" ns8:stroke="#718397"><dc:Bounds x="201.25" y="2852.00" width="1213.25" height="373.75"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns9="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_L_SP3_SA" bpmnElement="L_SP3_SA" isHorizontal="true" ns9:fill="#FFFFFF" ns9:stroke="#718397"><dc:Bounds x="201.25" y="3225.75" width="1213.25" height="441.25"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns10="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E01" bpmnElement="E01" ns10:fill="#F1F8F4" ns10:stroke="#33705B"><dc:Bounds x="1483.50" y="207.00" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="1435.20" y="251.85" width="132.25" height="63.25"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns11="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_SP1" bpmnElement="SP1" isExpanded="true" ns11:fill="#FFFFFF" ns11:stroke="#64748B"><dc:Bounds x="163.30" y="379.50" width="1251.20" height="690.00"/><bpmndi:BPMNLabel><dc:Bounds x="437.00" y="387.55" width="713.00" height="32.20"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns12="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_SP2" bpmnElement="SP2" isExpanded="true" ns12:fill="#FFFFFF" ns12:stroke="#64748B"><dc:Bounds x="163.30" y="1564.00" width="1251.20" height="885.50"/><bpmndi:BPMNLabel><dc:Bounds x="437.00" y="1572.05" width="713.00" height="32.20"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns13="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_SP3" bpmnElement="SP3" isExpanded="true" ns13:fill="#FFFFFF" ns13:stroke="#64748B"><dc:Bounds x="163.30" y="2806.00" width="1251.20" height="861.00"/><bpmndi:BPMNLabel><dc:Bounds x="437.00" y="2814.05" width="713.00" height="32.20"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns14="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G13" bpmnElement="G13" isMarkerVisible="true" ns14:fill="#FFF3D6" ns14:stroke="#9A6B16"><dc:Bounds x="1482.35" y="1288.00" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="1332.85" y="1224.75" width="126.50" height="55.20"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns15="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G16" bpmnElement="G16" isMarkerVisible="true" ns15:fill="#FFF3D6" ns15:stroke="#9A6B16"><dc:Bounds x="1482.35" y="2633.50" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="1332.85" y="2570.25" width="126.50" height="55.20"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns16="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G15" bpmnElement="G15" isMarkerVisible="true" ns16:fill="#FFF3D6" ns16:stroke="#9A6B16"><dc:Bounds x="1482.35" y="3834.00" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="1332.85" y="3770.75" width="126.50" height="55.20"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns17="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E11" bpmnElement="E11" ns17:fill="#F1F8F4" ns17:stroke="#33705B"><dc:Bounds x="1345.50" y="3926.00" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="1297.20" y="3970.85" width="132.25" height="63.25"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns18="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E13" bpmnElement="E13" ns18:fill="#F1F8F4" ns18:stroke="#33705B"><dc:Bounds x="1587.00" y="3926.00" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="1538.70" y="3970.85" width="132.25" height="63.25"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns19="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E16" bpmnElement="E16" ns19:fill="#F1F8F4" ns19:stroke="#33705B"><dc:Bounds x="230.00" y="500.25" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="207.00" y="449.65" width="115.00" height="43.70"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns20="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A01" bpmnElement="A01" ns20:fill="#EDF4FC" ns20:stroke="#456987"><dc:Bounds x="339.25" y="479.55" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns21="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A02" bpmnElement="A02" ns21:fill="#EDF4FC" ns21:stroke="#456987"><dc:Bounds x="534.75" y="479.55" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns22="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A05" bpmnElement="A05" ns22:fill="#EDF4FC" ns22:stroke="#456987"><dc:Bounds x="753.25" y="479.55" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns23="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A06" bpmnElement="A06" ns23:fill="#E5F4F4" ns23:stroke="#247B80"><dc:Bounds x="943.00" y="479.55" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns24="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A07" bpmnElement="A07" ns24:fill="#E5F4F4" ns24:stroke="#247B80"><dc:Bounds x="1132.75" y="479.55" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns25="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G02" bpmnElement="G02" isMarkerVisible="true" ns25:fill="#FFF3D6" ns25:stroke="#9A6B16"><dc:Bounds x="1338.60" y="499.10" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="1282.25" y="445.05" width="132.25" height="46.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns26="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E03" bpmnElement="E03" ns26:fill="#FFF3D6" ns26:stroke="#9A6B16"><dc:Bounds x="1240.85" y="542.80" width="25.30" height="25.30"/><bpmndi:BPMNLabel><dc:Bounds x="1098.00" y="558.00" width="160.00" height="28.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns27="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A33" bpmnElement="A33" ns27:fill="#EDF4FC" ns27:stroke="#456987"><dc:Bounds x="943.00" y="600.30" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns28="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E18" bpmnElement="E18" ns28:fill="#F1F8F4" ns28:stroke="#33705B"><dc:Bounds x="1167.25" y="621.00" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="1215.55" y="611.80" width="115.00" height="46.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns29="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A03" bpmnElement="A03" ns29:fill="#EDF4FC" ns29:stroke="#456987"><dc:Bounds x="534.75" y="813.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns30="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G01" bpmnElement="G01" isMarkerVisible="true" ns30:fill="#FFF3D6" ns30:stroke="#9A6B16"><dc:Bounds x="809.60" y="832.60" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="744.05" y="878.00" width="167.90" height="48.30"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns31="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A04" bpmnElement="A04" ns31:fill="#EDF4FC" ns31:stroke="#456987"><dc:Bounds x="943.00" y="813.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns32="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A08" bpmnElement="A08" ns32:fill="#EDF4FC" ns32:stroke="#456987"><dc:Bounds x="1132.75" y="813.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns33="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E17" bpmnElement="E17" ns33:fill="#F1F8F4" ns33:stroke="#33705B"><dc:Bounds x="1339.75" y="833.75" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="1276.50" y="891.25" width="132.25" height="43.70"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns34="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E19" bpmnElement="E19" ns34:fill="#F1F8F4" ns34:stroke="#33705B"><dc:Bounds x="224.25" y="1978.00" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="210.45" y="2023.71" width="109.25" height="170.20"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns35="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G03" bpmnElement="G03" isMarkerVisible="true" ns35:fill="#FFF3D6" ns35:stroke="#9A6B16"><dc:Bounds x="320.85" y="1976.85" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="281.75" y="1941.20" width="120.75" height="36.80"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns36="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A09" bpmnElement="A09" ns36:fill="#E5F4F4" ns36:stroke="#247B80"><dc:Bounds x="414.00" y="1957.30" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns37="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A10" bpmnElement="A10" ns37:fill="#E5F4F4" ns37:stroke="#247B80"><dc:Bounds x="586.50" y="1957.30" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns38="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G04" bpmnElement="G04" isMarkerVisible="true" ns38:fill="#FFF3D6" ns38:stroke="#9A6B16"><dc:Bounds x="792.35" y="1976.85" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="733.70" y="2040.10" width="71.30" height="156.40"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns39="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E06" bpmnElement="E06" ns39:fill="#F1F8F4" ns39:stroke="#33705B"><dc:Bounds x="891.25" y="1978.00" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="863.00" y="2064.00" width="90.00" height="30.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns40="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G06" bpmnElement="G06" isMarkerVisible="true" ns40:fill="#FFF3D6" ns40:stroke="#9A6B16"><dc:Bounds x="1022.35" y="1976.85" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="977.50" y="1874.50" width="126.50" height="69.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns41="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A13" bpmnElement="A13" ns41:fill="#EDF4FC" ns41:stroke="#456987"><dc:Bounds x="1121.25" y="1957.30" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns42="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E14" bpmnElement="E14" ns42:fill="#F1F8F4" ns42:stroke="#33705B"><dc:Bounds x="322.00" y="2185.00" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="230.00" y="2202.97" width="92.00" height="39.10"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns43="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G07" bpmnElement="G07" isMarkerVisible="true" ns43:fill="#FFF3D6" ns43:stroke="#9A6B16"><dc:Bounds x="320.85" y="2298.85" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="253.00" y="2363.25" width="166.75" height="39.10"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns44="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A14" bpmnElement="A14" ns44:fill="#EDF4FC" ns44:stroke="#456987"><dc:Bounds x="414.00" y="2279.30" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns45="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A15" bpmnElement="A15" ns45:fill="#EDF4FC" ns45:stroke="#456987"><dc:Bounds x="592.25" y="2279.30" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns46="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G08" bpmnElement="G08" isMarkerVisible="true" ns46:fill="#FFF3D6" ns46:stroke="#9A6B16"><dc:Bounds x="821.10" y="2298.85" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="640.00" y="2362.00" width="190.00" height="55.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns47="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A16" bpmnElement="A16" ns47:fill="#EDF4FC" ns47:stroke="#456987"><dc:Bounds x="943.00" y="2279.30" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns48="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E20" bpmnElement="E20" ns48:fill="#F1F8F4" ns48:stroke="#33705B"><dc:Bounds x="1339.75" y="2380.50" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="1219.00" y="2425.35" width="178.25" height="40.25"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns49="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A11" bpmnElement="A11" ns49:fill="#E5F4F4" ns49:stroke="#247B80"><dc:Bounds x="414.00" y="1646.80" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns50="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A12" bpmnElement="A12" ns50:fill="#E5F4F4" ns50:stroke="#247B80"><dc:Bounds x="592.25" y="1646.80" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns51="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E05" bpmnElement="E05" ns51:fill="#FFF3D6" ns51:stroke="#9A6B16"><dc:Bounds x="700.35" y="1710.05" width="25.30" height="25.30"/><bpmndi:BPMNLabel><dc:Bounds x="540.00" y="1738.00" width="150.00" height="28.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns52="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G05" bpmnElement="G05" isMarkerVisible="true" ns52:fill="#FFF3D6" ns52:stroke="#9A6B16"><dc:Bounds x="821.10" y="1666.35" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="756.70" y="1629.55" width="166.75" height="37.95"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns53="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A17" bpmnElement="A17" ns53:fill="#E5F4F4" ns53:stroke="#247B80"><dc:Bounds x="943.00" y="1646.80" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns54="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A18" bpmnElement="A18" ns54:fill="#E5F4F4" ns54:stroke="#247B80"><dc:Bounds x="1121.25" y="1646.80" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns55="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E08" bpmnElement="E08" ns55:fill="#FFF3D6" ns55:stroke="#9A6B16"><dc:Bounds x="1229.35" y="1710.05" width="25.30" height="25.30"/><bpmndi:BPMNLabel><dc:Bounds x="1080.00" y="1738.00" width="150.00" height="28.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns56="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G09" bpmnElement="G09" isMarkerVisible="true" ns56:fill="#FFF3D6" ns56:stroke="#9A6B16"><dc:Bounds x="1338.60" y="1666.35" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="1282.25" y="1629.55" width="126.50" height="39.10"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns57="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A19" bpmnElement="A19" ns57:fill="#EDF4FC" ns57:stroke="#456987"><dc:Bounds x="1276.50" y="1957.30" width="126.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns58="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E15" bpmnElement="E15" ns58:fill="#F1F8F4" ns58:stroke="#33705B"><dc:Bounds x="1322.50" y="2185.00" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="1270.75" y="2233.30" width="138.00" height="39.10"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns59="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A34" bpmnElement="A34" ns59:fill="#EDF4FC" ns59:stroke="#456987"><dc:Bounds x="790.00" y="1752.05" width="124.00" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns60="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E21" bpmnElement="E21" ns60:fill="#F1F8F4" ns60:stroke="#33705B"><dc:Bounds x="1000.00" y="1772.75" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="1040.00" y="1776.00" width="80.00" height="32.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns61="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E22" bpmnElement="E22" ns61:fill="#F1F8F4" ns61:stroke="#33705B"><dc:Bounds x="224.25" y="2926.75" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="208.15" y="2875.00" width="90.85" height="43.70"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns62="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G14" bpmnElement="G14" isMarkerVisible="true" ns62:fill="#FFF3D6" ns62:stroke="#9A6B16"><dc:Bounds x="349.60" y="2925.60" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="339.25" y="2868.10" width="149.50" height="50.60"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns63="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G10" bpmnElement="G10" isMarkerVisible="true" ns63:fill="#FFF3D6" ns63:stroke="#9A6B16"><dc:Bounds x="476.10" y="2925.60" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="445.05" y="2981.95" width="109.25" height="40.25"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns64="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A20" bpmnElement="A20" ns64:fill="#EDF4FC" ns64:stroke="#456987"><dc:Bounds x="592.25" y="2906.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns65="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G11" bpmnElement="G11" isMarkerVisible="true" ns65:fill="#FFF3D6" ns65:stroke="#9A6B16"><dc:Bounds x="821.10" y="2925.60" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="775.10" y="2872.70" width="128.80" height="41.40"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns66="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A23" bpmnElement="A23" ns66:fill="#EDF4FC" ns66:stroke="#456987"><dc:Bounds x="937.25" y="2906.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns67="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G12" bpmnElement="G12" isMarkerVisible="true" ns67:fill="#FFF3D6" ns67:stroke="#9A6B16"><dc:Bounds x="821.10" y="3086.60" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="757.85" y="3131.59" width="178.25" height="80.50"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns68="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A21" bpmnElement="A21" ns68:fill="#EDF4FC" ns68:stroke="#456987"><dc:Bounds x="546.25" y="3067.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns69="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A22" bpmnElement="A22" ns69:fill="#EDF4FC" ns69:stroke="#456987"><dc:Bounds x="937.25" y="3067.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns70="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A28" bpmnElement="A28" ns70:fill="#EDF4FC" ns70:stroke="#456987"><dc:Bounds x="1161.50" y="3067.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns71="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A24" bpmnElement="A24" ns71:fill="#E5F4F4" ns71:stroke="#247B80"><dc:Bounds x="419.75" y="3274.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns72="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A25" bpmnElement="A25" ns72:fill="#EDF4FC" ns72:stroke="#456987"><dc:Bounds x="638.25" y="3274.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns73="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A26" bpmnElement="A26" ns73:fill="#E5F4F4" ns73:stroke="#247B80"><dc:Bounds x="856.75" y="3274.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns74="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A27" bpmnElement="A27" ns74:fill="#EDF4FC" ns74:stroke="#456987"><dc:Bounds x="1075.25" y="3274.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns75="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E23" bpmnElement="E23" ns75:fill="#F1F8F4" ns75:stroke="#33705B"><dc:Bounds x="1339.75" y="3294.75" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="1265.00" y="3252.20" width="120.75" height="40.25"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns76="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A29" bpmnElement="A29" ns76:fill="#E5F4F4" ns76:stroke="#247B80"><dc:Bounds x="419.75" y="3412.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns77="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A30" bpmnElement="A30" ns77:fill="#EDF4FC" ns77:stroke="#456987"><dc:Bounds x="638.25" y="3412.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns78="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A31" bpmnElement="A31" ns78:fill="#E5F4F4" ns78:stroke="#247B80"><dc:Bounds x="856.75" y="3412.05" width="149.50" height="75.90"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns79="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A32" bpmnElement="A32" ns79:fill="#EDF4FC" ns79:stroke="#456987"><dc:Bounds x="1170.00" y="3532.00" width="130.00" height="76.00"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns80="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_E24" bpmnElement="E24" ns80:fill="#F1F8F4" ns80:stroke="#33705B"><dc:Bounds x="1340.00" y="3553.00" width="34.50" height="34.50"/><bpmndi:BPMNLabel><dc:Bounds x="1300.00" y="3592.00" width="110.00" height="40.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns0="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G19" bpmnElement="G19" ns0:fill="#FFF3D6" ns0:stroke="#9A6B16" isMarkerVisible="true"><dc:Bounds x="876.60" y="619.60" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="798.00" y="590.00" width="76.00" height="40.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns2="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G21" bpmnElement="G21" ns2:fill="#FFF3D6" ns2:stroke="#9A6B16" isMarkerVisible="true"><dc:Bounds x="731.60" y="1771.60" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="660.00" y="1810.00" width="85.00" height="32.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns3="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G20" bpmnElement="G20" ns3:fill="#FFF3D6" ns3:stroke="#9A6B16" isMarkerVisible="true"><dc:Bounds x="1281.60" y="1771.60" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="1206.00" y="1796.00" width="80.00" height="36.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns6="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G17" bpmnElement="G17" ns6:fill="#FFF3D6" ns6:stroke="#9A6B16" isMarkerVisible="true"><dc:Bounds x="1026.60" y="3431.60" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="985.00" y="3392.00" width="120.00" height="32.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns7="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_A35" bpmnElement="A35" ns7:fill="#E5F4F4" ns7:stroke="#247B80"><dc:Bounds x="960.00" y="3532.00" width="130.00" height="76.00"/></bpmndi:BPMNShape><bpmndi:BPMNShape xmlns:ns8="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_G18" bpmnElement="G18" ns8:fill="#FFF3D6" ns8:stroke="#9A6B16" isMarkerVisible="true"><dc:Bounds x="1111.60" y="3551.60" width="36.80" height="36.80"/><bpmndi:BPMNLabel><dc:Bounds x="1092.00" y="3593.00" width="80.00" height="32.00"/></bpmndi:BPMNLabel></bpmndi:BPMNShape><bpmndi:BPMNEdge xmlns:ns85="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F001" bpmnElement="F001" ns85:stroke="#526477"><di:waypoint x="1500.75" y="241.50"/><di:waypoint x="1500.75" y="419.75"/><di:waypoint x="1414.50" y="419.75"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns86="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F002" bpmnElement="F002" ns86:stroke="#526477"><di:waypoint x="1414.50" y="1029.25"/><di:waypoint x="1500.75" y="1029.25"/><di:waypoint x="1500.75" y="1288.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns87="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F003" bpmnElement="F003" ns87:stroke="#526477"><di:waypoint x="1500.75" y="1324.80"/><di:waypoint x="1500.75" y="1604.25"/><di:waypoint x="1414.50" y="1604.25"/><bpmndi:BPMNLabel><dc:Bounds x="1506.50" y="1483.50" width="51.75" height="23.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns88="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F004" bpmnElement="F004" ns88:stroke="#526477"><di:waypoint x="1519.15" y="1306.40"/><di:waypoint x="1633.00" y="1306.40"/><di:waypoint x="1633.00" y="2651.90"/><di:waypoint x="1519.15" y="2651.90"/><bpmndi:BPMNLabel><dc:Bounds x="1598.50" y="1380.00" width="51.75" height="23.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns89="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F005" bpmnElement="F005" ns89:stroke="#526477"><di:waypoint x="1414.50" y="2409.25"/><di:waypoint x="1500.75" y="2409.25"/><di:waypoint x="1500.75" y="2633.50"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns90="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F006" bpmnElement="F006" ns90:stroke="#526477"><di:waypoint x="1500.75" y="2670.30"/><di:waypoint x="1500.75" y="2846.25"/><di:waypoint x="1414.50" y="2846.25"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns91="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F007" bpmnElement="F007" ns91:stroke="#526477"><di:waypoint x="1414.00" y="3627.00"/><di:waypoint x="1501.00" y="3627.00"/><di:waypoint x="1501.00" y="3834.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns92="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F008" bpmnElement="F008" ns92:stroke="#526477"><di:waypoint x="1482.35" y="3852.40"/><di:waypoint x="1362.75" y="3852.40"/><di:waypoint x="1362.75" y="3926.00"/><bpmndi:BPMNLabel><dc:Bounds x="1380.00" y="3816.75" width="51.75" height="23.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns93="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F009" bpmnElement="F009" ns93:stroke="#526477"><di:waypoint x="1519.15" y="3852.40"/><di:waypoint x="1604.25" y="3852.40"/><di:waypoint x="1604.25" y="3926.00"/><bpmndi:BPMNLabel><dc:Bounds x="1564.00" y="3816.75" width="51.75" height="23.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns94="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F010" bpmnElement="F010" ns94:stroke="#526477"><di:waypoint x="264.50" y="517.50"/><di:waypoint x="339.25" y="517.50"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns95="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F011" bpmnElement="F011" ns95:stroke="#526477"><di:waypoint x="488.75" y="517.50"/><di:waypoint x="534.75" y="517.50"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns96="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F012" bpmnElement="F012" ns96:stroke="#526477"><di:waypoint x="609.50" y="555.45"/><di:waypoint x="609.50" y="813.05"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns97="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F013" bpmnElement="F013" ns97:stroke="#526477"><di:waypoint x="684.25" y="851.00"/><di:waypoint x="809.60" y="851.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns98="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F014" bpmnElement="F014" ns98:stroke="#526477"><di:waypoint x="846.40" y="851.00"/><di:waypoint x="943.00" y="851.00"/><bpmndi:BPMNLabel><dc:Bounds x="885.36" y="829.15" width="18.67" height="16.10"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns99="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F015" bpmnElement="F015" ns99:stroke="#526477"><di:waypoint x="1018.00" y="813.00"/><di:waypoint x="1018.00" y="744.00"/><di:waypoint x="790.00" y="744.00"/><di:waypoint x="790.00" y="555.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns100="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F016" bpmnElement="F016" ns100:stroke="#526477"><di:waypoint x="828.00" y="833.00"/><di:waypoint x="828.00" y="638.00"/><di:waypoint x="876.60" y="638.00"/><bpmndi:BPMNLabel><dc:Bounds x="834.00" y="806.00" width="30.00" height="16.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns101="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F017" bpmnElement="F017" ns101:stroke="#526477"><di:waypoint x="902.75" y="517.50"/><di:waypoint x="943.00" y="517.50"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns102="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F018" bpmnElement="F018" ns102:stroke="#526477"><di:waypoint x="1092.50" y="517.50"/><di:waypoint x="1132.75" y="517.50"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns103="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F019" bpmnElement="F019" ns103:stroke="#526477"><di:waypoint x="1282.25" y="517.50"/><di:waypoint x="1338.60" y="517.50"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns104="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F020" bpmnElement="F020" ns104:stroke="#526477"><di:waypoint x="1375.40" y="517.50"/><di:waypoint x="1403.00" y="517.50"/><di:waypoint x="1403.00" y="851.00"/><di:waypoint x="1374.25" y="851.00"/><bpmndi:BPMNLabel><dc:Bounds x="1329.40" y="780.85" width="69.80" height="16.10"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns105="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F021" bpmnElement="F021" ns105:stroke="#526477"><di:waypoint x="1357.00" y="535.90"/><di:waypoint x="1357.00" y="736.00"/><di:waypoint x="1207.50" y="736.00"/><di:waypoint x="1207.50" y="813.05"/><bpmndi:BPMNLabel><dc:Bounds x="1362.00" y="600.00" width="44.00" height="16.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns106="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F022" bpmnElement="F022" ns106:stroke="#526477"><di:waypoint x="1207.50" y="888.95"/><di:waypoint x="1207.50" y="994.75"/><di:waypoint x="609.50" y="994.75"/><di:waypoint x="609.50" y="888.95"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns107="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F023" bpmnElement="F023" ns107:stroke="#526477"><di:waypoint x="1339.00" y="518.00"/><di:waypoint x="1328.00" y="518.00"/><di:waypoint x="1328.00" y="703.00"/><di:waypoint x="895.00" y="703.00"/><di:waypoint x="895.00" y="656.40"/><bpmndi:BPMNLabel><dc:Bounds x="1150.00" y="707.00" width="60.00" height="16.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns108="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F024" bpmnElement="F024" ns108:stroke="#526477"><di:waypoint x="1254.00" y="568.00"/><di:waypoint x="1254.00" y="592.00"/><di:waypoint x="895.00" y="592.00"/><di:waypoint x="895.00" y="619.60"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns109="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F025" bpmnElement="F025" ns109:stroke="#526477"><di:waypoint x="1092.50" y="638.25"/><di:waypoint x="1167.25" y="638.25"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns110="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F026" bpmnElement="F026" ns110:stroke="#526477"><di:waypoint x="258.75" y="1995.25"/><di:waypoint x="320.85" y="1995.25"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns111="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F027" bpmnElement="F027" ns111:stroke="#526477"><di:waypoint x="357.65" y="1995.25"/><di:waypoint x="414.00" y="1995.25"/><bpmndi:BPMNLabel><dc:Bounds x="376.49" y="2002.15" width="18.67" height="16.10"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns112="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F028" bpmnElement="F028" ns112:stroke="#526477"><di:waypoint x="563.50" y="1995.25"/><di:waypoint x="586.50" y="1995.25"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns113="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F029" bpmnElement="F029" ns113:stroke="#526477"><di:waypoint x="736.00" y="1995.25"/><di:waypoint x="792.35" y="1995.25"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns114="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F030" bpmnElement="F030" ns114:stroke="#526477"><di:waypoint x="810.75" y="2013.65"/><di:waypoint x="810.75" y="2242.50"/><di:waypoint x="1040.75" y="2242.50"/><di:waypoint x="1040.75" y="2013.65"/><bpmndi:BPMNLabel><dc:Bounds x="916.41" y="2220.65" width="18.67" height="16.10"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns115="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F031" bpmnElement="F031" ns115:stroke="#526477"><di:waypoint x="320.85" y="1995.25"/><di:waypoint x="310.50" y="1995.25"/><di:waypoint x="310.50" y="2026.30"/><di:waypoint x="365.70" y="2026.30"/><di:waypoint x="365.70" y="2289.65"/><di:waypoint x="310.50" y="2289.65"/><di:waypoint x="310.50" y="2317.25"/><di:waypoint x="320.85" y="2317.25"/><bpmndi:BPMNLabel><dc:Bounds x="261.05" y="2268.95" width="29.83" height="16.10"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns116="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F032" bpmnElement="F032" ns116:stroke="#526477"><di:waypoint x="810.75" y="1976.85"/><di:waypoint x="810.75" y="1852.65"/><di:waypoint x="488.75" y="1852.65"/><di:waypoint x="488.75" y="1722.70"/><bpmndi:BPMNLabel><dc:Bounds x="816.00" y="1950.00" width="30.00" height="16.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns117="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F033" bpmnElement="F033" ns117:stroke="#526477"><di:waypoint x="563.50" y="1684.75"/><di:waypoint x="592.25" y="1684.75"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns118="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F034" bpmnElement="F034" ns118:stroke="#526477"><di:waypoint x="741.75" y="1684.75"/><di:waypoint x="821.10" y="1684.75"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns119="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F035" bpmnElement="F035" ns119:stroke="#526477"><di:waypoint x="857.90" y="1684.75"/><di:waypoint x="925.75" y="1684.75"/><di:waypoint x="925.75" y="1943.50"/><di:waypoint x="908.50" y="1943.50"/><di:waypoint x="908.50" y="1978.00"/><bpmndi:BPMNLabel><dc:Bounds x="864.00" y="1666.00" width="20.00" height="16.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns120="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F036" bpmnElement="F036" ns120:stroke="#526477"><di:waypoint x="925.75" y="1995.25"/><di:waypoint x="1022.35" y="1995.25"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns121="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F037" bpmnElement="F037" ns121:stroke="#526477"><di:waypoint x="1059.15" y="1995.25"/><di:waypoint x="1121.25" y="1995.25"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns122="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F038" bpmnElement="F038" ns122:stroke="#526477"><di:waypoint x="1196.00" y="2033.20"/><di:waypoint x="1196.00" y="2265.50"/><di:waypoint x="339.25" y="2265.50"/><di:waypoint x="339.25" y="2298.85"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns123="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F039" bpmnElement="F039" ns123:stroke="#526477"><di:waypoint x="840.00" y="1703.00"/><di:waypoint x="840.00" y="1740.00"/><di:waypoint x="750.00" y="1740.00"/><di:waypoint x="750.00" y="1771.60"/><bpmndi:BPMNLabel><dc:Bounds x="846.00" y="1708.00" width="30.00" height="16.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns124="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F040" bpmnElement="F040" ns124:stroke="#526477"><di:waypoint x="713.00" y="1735.00"/><di:waypoint x="713.00" y="1790.00"/><di:waypoint x="731.60" y="1790.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns125="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F041" bpmnElement="F041" ns125:stroke="#526477"><di:waypoint x="1375.00" y="1685.00"/><di:waypoint x="1401.00" y="1685.00"/><di:waypoint x="1401.00" y="1790.00"/><di:waypoint x="1318.40" y="1790.00"/><bpmndi:BPMNLabel><dc:Bounds x="1378.00" y="1662.00" width="30.00" height="16.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns126="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F042" bpmnElement="F042" ns126:stroke="#526477"><di:waypoint x="1242.00" y="1735.00"/><di:waypoint x="1242.00" y="1760.00"/><di:waypoint x="1300.00" y="1760.00"/><di:waypoint x="1300.00" y="1771.60"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns127="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F043" bpmnElement="F043" ns127:stroke="#526477"><di:waypoint x="914.00" y="1790.00"/><di:waypoint x="1000.00" y="1790.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns128="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F044" bpmnElement="F044" ns128:stroke="#526477"><di:waypoint x="357.65" y="2317.25"/><di:waypoint x="414.00" y="2317.25"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns129="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F045" bpmnElement="F045" ns129:stroke="#526477"><di:waypoint x="563.50" y="2317.25"/><di:waypoint x="592.25" y="2317.25"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns130="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F046" bpmnElement="F046" ns130:stroke="#526477"><di:waypoint x="741.75" y="2317.25"/><di:waypoint x="821.10" y="2317.25"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns131="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F047" bpmnElement="F047" ns131:stroke="#526477"><di:waypoint x="840.00" y="2336.00"/><di:waypoint x="840.00" y="2398.00"/><di:waypoint x="1340.00" y="2398.00"/><bpmndi:BPMNLabel><dc:Bounds x="846.00" y="2345.00" width="30.00" height="16.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns132="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F048" bpmnElement="F048" ns132:stroke="#526477"><di:waypoint x="857.90" y="2317.25"/><di:waypoint x="943.00" y="2317.25"/><bpmndi:BPMNLabel><dc:Bounds x="913.10" y="2290.80" width="18.67" height="16.10"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns133="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F049" bpmnElement="F049" ns133:stroke="#526477"><di:waypoint x="1017.75" y="2279.30"/><di:waypoint x="1017.75" y="2021.70"/><di:waypoint x="967.15" y="2021.70"/><di:waypoint x="967.15" y="1733.05"/><di:waypoint x="1017.75" y="1733.05"/><di:waypoint x="1017.75" y="1722.70"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns134="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F050" bpmnElement="F050" ns134:stroke="#526477"><di:waypoint x="1092.50" y="1684.75"/><di:waypoint x="1121.25" y="1684.75"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns135="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F051" bpmnElement="F051" ns135:stroke="#526477"><di:waypoint x="1270.75" y="1684.75"/><di:waypoint x="1338.60" y="1684.75"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns136="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F052" bpmnElement="F052" ns136:stroke="#526477"><di:waypoint x="1357.00" y="1703.15"/><di:waypoint x="1357.00" y="1946.95"/><di:waypoint x="1339.75" y="1946.95"/><di:waypoint x="1339.75" y="1957.30"/><bpmndi:BPMNLabel><dc:Bounds x="1362.00" y="1708.00" width="20.00" height="16.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns137="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F053" bpmnElement="F053" ns137:stroke="#526477"><di:waypoint x="1339.75" y="2033.20"/><di:waypoint x="1339.75" y="2185.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns138="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F054" bpmnElement="F054" ns138:stroke="#526477"><di:waypoint x="339.25" y="2185.00"/><di:waypoint x="339.25" y="2013.65"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns139="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F055" bpmnElement="F055" ns139:stroke="#526477"><di:waypoint x="258.75" y="2944.00"/><di:waypoint x="349.60" y="2944.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns140="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F056" bpmnElement="F056" ns140:stroke="#526477"><di:waypoint x="386.40" y="2944.00"/><di:waypoint x="476.10" y="2944.00"/><bpmndi:BPMNLabel><dc:Bounds x="421.91" y="2922.15" width="18.67" height="16.10"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns141="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F057" bpmnElement="F057" ns141:stroke="#526477"><di:waypoint x="368.00" y="2962.40"/><di:waypoint x="368.00" y="3036.00"/><di:waypoint x="1236.25" y="3036.00"/><di:waypoint x="1236.25" y="3067.05"/><bpmndi:BPMNLabel><dc:Bounds x="374.00" y="2968.00" width="30.00" height="16.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns142="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F058" bpmnElement="F058" ns142:stroke="#526477"><di:waypoint x="512.90" y="2944.00"/><di:waypoint x="592.25" y="2944.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns143="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F059" bpmnElement="F059" ns143:stroke="#526477"><di:waypoint x="741.75" y="2944.00"/><di:waypoint x="821.10" y="2944.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns144="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F060" bpmnElement="F060" ns144:stroke="#526477"><di:waypoint x="857.90" y="2944.00"/><di:waypoint x="937.25" y="2944.00"/><bpmndi:BPMNLabel><dc:Bounds x="910.80" y="2917.55" width="18.67" height="16.10"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns145="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F061" bpmnElement="F061" ns145:stroke="#526477"><di:waypoint x="839.50" y="2962.40"/><di:waypoint x="839.50" y="3086.60"/><bpmndi:BPMNLabel><dc:Bounds x="846.00" y="2966.00" width="30.00" height="16.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns146="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F062" bpmnElement="F062" ns146:stroke="#526477"><di:waypoint x="821.10" y="3105.00"/><di:waypoint x="695.75" y="3105.00"/><bpmndi:BPMNLabel><dc:Bounds x="732.55" y="3078.55" width="18.67" height="16.10"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns147="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F063" bpmnElement="F063" ns147:stroke="#526477"><di:waypoint x="546.25" y="3105.00"/><di:waypoint x="535.90" y="3105.00"/><di:waypoint x="535.90" y="3026.80"/><di:waypoint x="558.90" y="3026.80"/><di:waypoint x="558.90" y="2972.75"/><di:waypoint x="494.50" y="2972.75"/><di:waypoint x="494.50" y="2962.40"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns148="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F064" bpmnElement="F064" ns148:stroke="#526477"><di:waypoint x="857.90" y="3105.00"/><di:waypoint x="937.25" y="3105.00"/><bpmndi:BPMNLabel><dc:Bounds x="882.66" y="3083.15" width="29.83" height="16.10"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns149="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F065" bpmnElement="F065" ns149:stroke="#526477"><di:waypoint x="1086.75" y="3105.00"/><di:waypoint x="1161.50" y="3105.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns150="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F066" bpmnElement="F066" ns150:stroke="#526477"><di:waypoint x="1086.75" y="2944.00"/><di:waypoint x="1109.75" y="2944.00"/><di:waypoint x="1109.75" y="3234.95"/><di:waypoint x="494.50" y="3234.95"/><di:waypoint x="494.50" y="3274.05"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns151="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F067" bpmnElement="F067" ns151:stroke="#526477"><di:waypoint x="569.25" y="3312.00"/><di:waypoint x="638.25" y="3312.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns152="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F068" bpmnElement="F068" ns152:stroke="#526477"><di:waypoint x="787.75" y="3312.00"/><di:waypoint x="856.75" y="3312.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns153="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F069" bpmnElement="F069" ns153:stroke="#526477"><di:waypoint x="1006.25" y="3312.00"/><di:waypoint x="1075.25" y="3312.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns154="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F070" bpmnElement="F070" ns154:stroke="#526477"><di:waypoint x="1224.75" y="3312.00"/><di:waypoint x="1339.75" y="3312.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns155="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F071" bpmnElement="F071" ns155:stroke="#526477"><di:waypoint x="1311.00" y="3105.00"/><di:waypoint x="1397.25" y="3105.00"/><di:waypoint x="1397.25" y="3381.00"/><di:waypoint x="379.50" y="3381.00"/><di:waypoint x="379.50" y="3450.00"/><di:waypoint x="419.75" y="3450.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns156="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F072" bpmnElement="F072" ns156:stroke="#526477"><di:waypoint x="569.25" y="3450.00"/><di:waypoint x="638.25" y="3450.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns157="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F073" bpmnElement="F073" ns157:stroke="#526477"><di:waypoint x="787.75" y="3450.00"/><di:waypoint x="856.75" y="3450.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns158="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F074" bpmnElement="F074" ns158:stroke="#526477"><di:waypoint x="1006.00" y="3450.00"/><di:waypoint x="1026.60" y="3450.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns159="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F075" bpmnElement="F075" ns159:stroke="#526477"><di:waypoint x="1300.00" y="3570.00"/><di:waypoint x="1340.00" y="3570.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns160="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M01" bpmnElement="M01" ns160:stroke="#247B80"><di:waypoint x="97.75" y="224.25"/><di:waypoint x="1483.50" y="224.25"/><bpmndi:BPMNLabel><dc:Bounds x="339.25" y="185.15" width="126.50" height="34.50"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns161="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M02" bpmnElement="M02" ns161:stroke="#247B80"><di:waypoint x="1017.75" y="479.55"/><di:waypoint x="1017.75" y="339.25"/><di:waypoint x="97.75" y="339.25"/><bpmndi:BPMNLabel><dc:Bounds x="281.75" y="307.05" width="126.50" height="34.50"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns162="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M03" bpmnElement="M03" ns162:stroke="#247B80"><di:waypoint x="97.75" y="287.50"/><di:waypoint x="1207.50" y="287.50"/><di:waypoint x="1207.50" y="479.55"/><bpmndi:BPMNLabel><dc:Bounds x="626.75" y="253.00" width="126.50" height="34.50"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns163="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M04" bpmnElement="M04" ns163:stroke="#247B80"><di:waypoint x="488.75" y="2033.20"/><di:waypoint x="488.75" y="2162.00"/><di:waypoint x="1759.50" y="2162.00"/><bpmndi:BPMNLabel><dc:Bounds x="1523.75" y="2127.50" width="126.50" height="34.50"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns164="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M05" bpmnElement="M05" ns164:stroke="#247B80"><di:waypoint x="1759.50" y="2110.25"/><di:waypoint x="661.25" y="2110.25"/><di:waypoint x="661.25" y="2033.20"/><bpmndi:BPMNLabel><dc:Bounds x="1523.75" y="2071.15" width="126.50" height="34.50"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns165="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M06" bpmnElement="M06" ns165:stroke="#247B80"><di:waypoint x="488.75" y="1646.80"/><di:waypoint x="488.75" y="1477.75"/><di:waypoint x="97.75" y="1477.75"/><bpmndi:BPMNLabel><dc:Bounds x="264.50" y="1443.25" width="126.50" height="34.50"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns166="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M07" bpmnElement="M07" ns166:stroke="#247B80"><di:waypoint x="97.75" y="1408.75"/><di:waypoint x="609.50" y="1408.75"/><di:waypoint x="609.50" y="1646.80"/><bpmndi:BPMNLabel><dc:Bounds x="460.00" y="1374.25" width="126.50" height="34.50"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns167="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M08" bpmnElement="M08" ns167:stroke="#247B80"><di:waypoint x="1759.50" y="2058.50"/><di:waypoint x="908.50" y="2058.50"/><di:waypoint x="908.50" y="2012.50"/><bpmndi:BPMNLabel><dc:Bounds x="1523.75" y="2019.40" width="126.50" height="34.50"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns168="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M09" bpmnElement="M09" ns168:stroke="#247B80"><di:waypoint x="1017.75" y="1646.80"/><di:waypoint x="1017.75" y="1339.75"/><di:waypoint x="97.75" y="1339.75"/><bpmndi:BPMNLabel><dc:Bounds x="701.50" y="1305.25" width="126.50" height="34.50"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns169="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M10" bpmnElement="M10" ns169:stroke="#247B80"><di:waypoint x="97.75" y="1270.75"/><di:waypoint x="1196.00" y="1270.75"/><di:waypoint x="1196.00" y="1646.80"/><bpmndi:BPMNLabel><dc:Bounds x="994.75" y="1236.25" width="126.50" height="34.50"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns170="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M11" bpmnElement="M11" ns170:stroke="#247B80"><di:waypoint x="419.75" y="3312.00"/><di:waypoint x="97.75" y="3312.00"/><bpmndi:BPMNLabel><dc:Bounds x="247.25" y="3271.75" width="126.50" height="34.50"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns171="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M12" bpmnElement="M12" ns171:stroke="#247B80"><di:waypoint x="931.50" y="3349.95"/><di:waypoint x="931.50" y="3375.25"/><di:waypoint x="1759.50" y="3375.25"/><bpmndi:BPMNLabel><dc:Bounds x="1495.00" y="3335.00" width="126.50" height="34.50"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns172="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M13" bpmnElement="M13" ns172:stroke="#247B80"><di:waypoint x="419.75" y="3450.00"/><di:waypoint x="97.75" y="3450.00"/><bpmndi:BPMNLabel><dc:Bounds x="247.25" y="3409.75" width="126.50" height="34.50"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns173="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M14" bpmnElement="M14" ns173:stroke="#247B80"><di:waypoint x="932.00" y="3488.00"/><di:waypoint x="932.00" y="3712.00"/><di:waypoint x="1730.00" y="3712.00"/><di:waypoint x="1730.00" y="3560.00"/><di:waypoint x="1760.00" y="3560.00"/><bpmndi:BPMNLabel><dc:Bounds x="1520.00" y="3714.00" width="140.00" height="16.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns174="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_M15" bpmnElement="M15" ns174:stroke="#247B80"><di:waypoint x="1025.00" y="3608.00"/><di:waypoint x="1025.00" y="3690.00"/><di:waypoint x="1700.00" y="3690.00"/><di:waypoint x="1700.00" y="2467.00"/><di:waypoint x="1760.00" y="2467.00"/><bpmndi:BPMNLabel><dc:Bounds x="1520.00" y="3648.00" width="140.00" height="30.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNShape xmlns:ns81="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_T01" bpmnElement="T01" ns81:fill="#FFFFFF" ns81:stroke="#334155"><dc:Bounds x="575.00" y="1127.00" width="379.50" height="85.10"/></bpmndi:BPMNShape><bpmndi:BPMNEdge xmlns:ns175="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_AS_T01" bpmnElement="AS_T01" ns175:stroke="#526477"><di:waypoint x="805.00" y="1069.50"/><di:waypoint x="805.00" y="1127.00"/></bpmndi:BPMNEdge><bpmndi:BPMNShape xmlns:ns82="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_T02" bpmnElement="T02" ns82:fill="#FFFFFF" ns82:stroke="#334155"><dc:Bounds x="1063.75" y="2530.00" width="322.00" height="74.75"/></bpmndi:BPMNShape><bpmndi:BPMNEdge xmlns:ns176="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_AS_T02" bpmnElement="AS_T02" ns176:stroke="#526477"><di:waypoint x="1276.50" y="2449.50"/><di:waypoint x="1276.50" y="2530.00"/></bpmndi:BPMNEdge><bpmndi:BPMNShape xmlns:ns83="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_T03" bpmnElement="T03" ns83:fill="#FFFFFF" ns83:stroke="#334155"><dc:Bounds x="1063.75" y="2696.75" width="322.00" height="80.50"/></bpmndi:BPMNShape><bpmndi:BPMNEdge xmlns:ns177="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_AS_T03" bpmnElement="AS_T03" ns177:stroke="#526477"><di:waypoint x="1276.50" y="2806.00"/><di:waypoint x="1276.50" y="2777.25"/></bpmndi:BPMNEdge><bpmndi:BPMNShape xmlns:ns84="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_T04" bpmnElement="T04" ns84:fill="#FFFFFF" ns84:stroke="#334155"><dc:Bounds x="1213.25" y="2288.50" width="178.25" height="95.00"/></bpmndi:BPMNShape><bpmndi:BPMNEdge xmlns:ns1="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F076" bpmnElement="F076" ns1:stroke="#526477"><di:waypoint x="913.40" y="638.00"/><di:waypoint x="943.00" y="638.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns4="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F077" bpmnElement="F077" ns4:stroke="#526477"><di:waypoint x="1300.00" y="1808.40"/><di:waypoint x="1300.00" y="1842.00"/><di:waypoint x="750.00" y="1842.00"/><di:waypoint x="750.00" y="1808.40"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns5="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F078" bpmnElement="F078" ns5:stroke="#526477"><di:waypoint x="768.40" y="1790.00"/><di:waypoint x="790.00" y="1790.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns9="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F079" bpmnElement="F079" ns9:stroke="#526477"><di:waypoint x="1045.00" y="3468.40"/><di:waypoint x="1045.00" y="3532.00"/><bpmndi:BPMNLabel><dc:Bounds x="1050.00" y="3482.00" width="20.00" height="16.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns10="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F080" bpmnElement="F080" ns10:stroke="#526477"><di:waypoint x="1063.40" y="3450.00"/><di:waypoint x="1130.00" y="3450.00"/><di:waypoint x="1130.00" y="3551.60"/><bpmndi:BPMNLabel><dc:Bounds x="1072.00" y="3432.00" width="30.00" height="16.00"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns11="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F082" bpmnElement="F082" ns11:stroke="#526477"><di:waypoint x="1090.00" y="3570.00"/><di:waypoint x="1111.60" y="3570.00"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge xmlns:ns12="http://bpmn.io/schema/bpmn/biocolor/1.0" id="DI_GESAMT_F081" bpmnElement="F081" ns12:stroke="#526477"><di:waypoint x="1148.40" y="3570.00"/><di:waypoint x="1170.00" y="3570.00"/></bpmndi:BPMNEdge></bpmndi:BPMNPlane></bpmndi:BPMNDiagram></bpmn:definitions>
